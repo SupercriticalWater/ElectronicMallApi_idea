@@ -83,7 +83,6 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             old.setAvatarUrl(ObjectUtils.isEmpty(user.getAvatarUrl()) ? old.getAvatarUrl() : user.getAvatarUrl());
             old.setRole(ObjectUtils.isEmpty(user.getRole()) ? old.getRole() : user.getRole());
            // old.setPhone(ObjectUtils.isEmpty(user.getPhone()) ? old.getPhone() : user.getPhone());
-            //old.setEmail(ObjectUtils.isEmpty(user.getEmail()) ? old.getEmail() : user.getEmail());
             //old.setAddress(ObjectUtils.isEmpty(user.getAddress()) ? old.getAddress() : user.getAddress());
             super.updateById(old);
             return Result.success("修改成功");

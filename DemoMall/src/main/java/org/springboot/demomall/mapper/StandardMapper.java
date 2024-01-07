@@ -9,9 +9,9 @@ import org.apache.ibatis.annotations.Update;
 
 public interface StandardMapper extends BaseMapper<Standard> {
     @Update("update good_standard set store = #{num} where gid = #{gid} and value = #{standard}")
-    void deductStore(@Param("gid") long good_id, @Param("standard") String standard, @Param("num") int num);
+    void deductStore(@Param("gid") long gid, @Param("standard") String standard, @Param("num") int num);
 
-    @Select("select store from good_standard where good_id = #{gid} and value = #{standard}")
+    @Select("select store from good_standard where gid = #{gid} and value = #{standard}")
     int getStore(@Param("gid") long gid, @Param("standard")String standard);
 
 

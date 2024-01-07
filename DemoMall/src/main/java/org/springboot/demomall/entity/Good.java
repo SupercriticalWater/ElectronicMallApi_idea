@@ -15,7 +15,7 @@ public class Good extends Model<Good> {
     private Long gid;
 
     @TableId(value = "uid", type = IdType.AUTO)
-    private Long uid;
+    private Integer uid;
 
     /**
      * 商品名称
@@ -73,11 +73,11 @@ public class Good extends Model<Good> {
         this.gid = gid;
     }
 
-    public Long getUid() {
+    public Integer getUid() {
         return uid;
     }
 
-    public void setUid(Long uid) {
+    public void setUid(Integer uid) {
         this.uid = uid;
     }
 

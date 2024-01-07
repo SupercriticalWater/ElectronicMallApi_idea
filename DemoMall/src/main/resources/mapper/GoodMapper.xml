@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springboot.demomall.mapper.GoodMapper">
+    <insert id="insertGood" useGeneratedKeys="true" keyProperty="gid">
+        insert into good(name, category_id,imgs,description, create_time) value (#{good.name},#{good.categoryId},#{good.imgs}, #{good.description},#{good.createTime})
+    </insert>
+    <update id="saleGood">
+        update `good` set sales = sales + #{count} ,sale_money = sale_money + #{money} where good.id = #{id}
+    </update>
+
+
+    <select id="findFrontGoods" resultType="org.springboot.demomall.mapper.GoodMapper">
+        SELECT good.*,MIN(good_standard.price) as price FROM `good` LEFT JOIN good_standard on good.gid = good_standard.gid  WHERE is_delete = 0 AND recommend = 1 GROUP BY id  ORDER BY price ASC
+    </select>
+</mapper>

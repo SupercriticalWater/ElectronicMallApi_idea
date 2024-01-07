@@ -41,7 +41,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         String token = TokenUtils.genToken(user.getUid().toString(), user.getUsername());
         //把用户存到redis中
         redisTemplate.opsForValue().set(RedisConstants.USER_TOKEN_KEY + token,user);
-        //jwt不设置过期时间，只设置redis过期时间。
+        //不设置过期时间，只设置redis过期时间。
         redisTemplate.expire(RedisConstants.USER_TOKEN_KEY +token, RedisConstants.USER_TOKEN_TTL, TimeUnit.MINUTES);
         //把查到的user的一些属性赋值给userDTO
         UserDTO userDTO = BeanUtil.copyProperties(user,UserDTO.class);
@@ -82,11 +82,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             //old.setNickname(ObjectUtils.isEmpty(user.getNickname()) ? old.getNickname() : user.getNickname());
             old.setAvatarUrl(ObjectUtils.isEmpty(user.getAvatarUrl()) ? old.getAvatarUrl() : user.getAvatarUrl());
             old.setRole(ObjectUtils.isEmpty(user.getRole()) ? old.getRole() : user.getRole());
-           // old.setPhone(ObjectUtils.isEmpty(user.getPhone()) ? old.getPhone() : user.getPhone());
+            // old.setPhone(ObjectUtils.isEmpty(user.getPhone()) ? old.getPhone() : user.getPhone());
             //old.setEmail(ObjectUtils.isEmpty(user.getEmail()) ? old.getEmail() : user.getEmail());
             //old.setAddress(ObjectUtils.isEmpty(user.getAddress()) ? old.getAddress() : user.getAddress());
             super.updateById(old);
-            return Result.success("修改成功");
+            return Result.success(null,"修改成功");
         } else {
             // 新增
             if(!ObjectUtils.isEmpty(this.getOne(user.getUsername()))) {
@@ -94,7 +94,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             }
             user.setPassword(user.getNewPassword());
             super.save(user);
-            return Result.success("新增成功");
+            return Result.success(null,"新增成功");
         }
     }
 
@@ -118,4 +118,3 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         this.updateById(user);
     }
 }
-

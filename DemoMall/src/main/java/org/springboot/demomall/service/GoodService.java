@@ -30,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.springboot.demomall.constants.RedisConstants.GOOD_TOKEN_KEY;
 import static org.springboot.demomall.constants.RedisConstants.GOOD_TOKEN_TTL;
+import static org.springboot.demomall.constants.RedisConstants.USER_TOKEN_KEY;
 
 @Service
 public class GoodService extends ServiceImpl<GoodMapper, Good>{
@@ -62,6 +63,17 @@ public class GoodService extends ServiceImpl<GoodMapper, Good>{
         }
         //数据库中没有则返回异常
         throw new ServiceException(Constants.NO_RESULT,"无结果");
+
+    }
+
+    //查找由某个user所贩卖的所有商品
+    public List<GoodDTO> getGoodByUid(Integer uid) {
+
+        List<GoodDTO> goods = goodMapper.getGoodByUid(uid);
+        if( goods.size()==0){
+            throw new ServiceException(Constants.NO_RESULT,"无结果");
+        }
+            return goods;
 
     }
 
@@ -103,10 +115,11 @@ public class GoodService extends ServiceImpl<GoodMapper, Good>{
         return good.getGid();
     }
 
-    public boolean setRecommend(Long gid,Boolean isRecommend) {
+    public boolean setRecommend(Long gid,Integer uid,Boolean isRecommend) {
         LambdaUpdateWrapper<Good> goodsLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
-        goodsLambdaUpdateWrapper.eq(Good::getGid,gid)
-                .set(Good::getRecommend,isRecommend);
+        goodsLambdaUpdateWrapper.eq(Good::getGid,gid);
+        goodsLambdaUpdateWrapper.eq(Good::getUid,uid);
+        goodsLambdaUpdateWrapper.set(Good::getRecommend,isRecommend);
         return update(goodsLambdaUpdateWrapper);
     }
 
@@ -121,7 +134,7 @@ public class GoodService extends ServiceImpl<GoodMapper, Good>{
 
     //分页查询
     public IPage<GoodDTO> findPage(Integer pageNum, Integer pageSize, String searchText, Integer categoryId) {
-        LambdaQueryWrapper<Good> query = Wrappers.<Good>lambdaQuery().orderByDesc(Good::getUid);
+        LambdaQueryWrapper<Good> query = Wrappers.<Good>lambdaQuery().orderByDesc(Good::getGid);
         //对名称和描述进行模糊查询
         if (StrUtil.isNotBlank(searchText)) {
             query.like(Good::getName, searchText).or().like(Good::getDescription,searchText).or().eq(Good::getUid,searchText);
@@ -143,5 +156,24 @@ public class GoodService extends ServiceImpl<GoodMapper, Good>{
             good.setPrice(getMinPrice(good.getGid()));
         }
         return goodDTOPage;
+    }
+
+    public IPage<Good> findFullPage(Integer pageNum, Integer pageSize, String searchText, Integer categoryId) {
+        LambdaQueryWrapper<Good> query = Wrappers.<Good>lambdaQuery().orderByDesc(Good::getGid);
+        //对名称和描述进行模糊查询
+        if (StrUtil.isNotBlank(searchText)) {
+            query.like(Good::getName, searchText).or().like(Good::getDescription,searchText).or().eq(Good::getGid,searchText);
+        }
+        if(categoryId != null){
+            query.eq(Good::getCategoryId,categoryId);
+        }
+        //筛除掉已被删除的商品
+        query.eq(Good::getDelete,false);
+        IPage<Good> page = this.page(new Page<>(pageNum, pageSize), query);
+        for (Good good : page.getRecords()) {
+            //附上最低价格
+            good.setPrice(getMinPrice(good.getGid()));
+        }
+        return page;
     }
 }

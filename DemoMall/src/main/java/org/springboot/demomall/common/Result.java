@@ -10,8 +10,8 @@ public class Result {
         return new Result(Constants.CODE_200,null,null);
     }
 
-    public static Result success(Object data){
-        return new Result(Constants.CODE_200,null,data);
+    public static Result success(Object data,String msg){
+        return new Result(Constants.CODE_200,msg,data);
     }
     public static Result error(){
         return new Result(Constants.CODE_500,null,null);

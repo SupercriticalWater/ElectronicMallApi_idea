@@ -1,0 +1,90 @@
+package org.springboot.demomall.controller;
+
+import org.springboot.demomall.annotation.Authority;
+import org.springboot.demomall.constants.Constants;
+import org.springboot.demomall.common.Result;
+import org.springboot.demomall.entity.AuthorityType;
+import org.springboot.demomall.entity.Good;
+import org.springboot.demomall.entity.Standard;
+import org.springboot.demomall.service.GoodService;
+import org.springboot.demomall.service.StandardService;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/good")
+public class GoodController {
+
+    @Resource
+    private GoodService goodService;
+
+    @Resource
+    private StandardService standardService;
+
+    @PostMapping
+    public Result save(@RequestBody Good good) {
+        System.out.println(good);
+        return Result.success(goodService.saveOrUpdateGood(good),"成功保存！");
+    }
+
+    @PutMapping
+    public Result update(@RequestBody Good good) {
+        goodService.update(good);
+        return Result.success();
+    }
+
+    @DeleteMapping("/{uid}/{gid}")
+    public Result delete(@PathVariable Long gid, @PathVariable Integer uid) {
+        goodService.deleteGood(gid,uid);
+        return Result.success();
+    }
+
+    @GetMapping("/good/{gid}")
+    public Result findByGid(@PathVariable Long gid) {
+        return Result.success(goodService.getGoodByGid(gid), "查询成功！");
+    }
+
+    @GetMapping("/user/{uid}")
+    public Result findByUid(@PathVariable Integer uid) {
+        return Result.success(goodService.getGoodByUid(uid), "查询成功！");
+    }
+
+    @GetMapping
+    public Result findAll() {
+
+        return Result.success(goodService.findFrontGoods(),"查询成功！");
+    }
+
+    @GetMapping("/rank")
+    public Result getSaleRank(@RequestParam int num){
+        return Result.success(goodService.getSaleRank(num), "查询成功！");
+    }
+    //修改商品的推荐字段
+    @Authority(AuthorityType.requireAuthority)
+    @GetMapping("/recommend")
+    public Result setRecommend(@RequestParam Long gid,@RequestParam Integer uid,@RequestParam Boolean isRecommend){
+        return Result.success(goodService.setRecommend(gid,uid, isRecommend),"查询成功！");
+    }
+
+    @GetMapping("/page")
+    public Result findPage(
+            @RequestParam(required = false, defaultValue = "1") Integer pageNum,
+            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
+            @RequestParam(required = false, defaultValue = "") String searchText,
+            @RequestParam(required = false) Integer categoryId) {
+
+        return Result.success(goodService.findPage(pageNum,pageSize,searchText,categoryId),"分页查询成功！");
+    }
+    @GetMapping("/fullPage")
+    public Result findFullPage(
+            @RequestParam(required = false, defaultValue = "1") Integer pageNum,
+            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
+            @RequestParam(required = false, defaultValue = "") String searchText,
+            @RequestParam(required = false) Integer categoryId) {
+
+        return Result.success(goodService.findFullPage(pageNum,pageSize,searchText,categoryId),"查询成功！");
+    }
+
+}

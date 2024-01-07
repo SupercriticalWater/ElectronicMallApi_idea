@@ -3,16 +3,16 @@ package org.springboot.demomall.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+//import com.sun.xml.internal.fastinfoset.stax.events.Util;
 import org.springboot.demomall.annotation.Authority;
-import org.springboot.demomall.constants.Constants;
 import org.springboot.demomall.common.Result;
+import org.springboot.demomall.constants.Constants;
 import org.springboot.demomall.entity.AuthorityType;
 import org.springboot.demomall.entity.LoginForm;
 import org.springboot.demomall.entity.User;
 import org.springboot.demomall.entity.dto.UserDTO;
 import org.springboot.demomall.service.UserService;
 import org.springboot.demomall.utils.TokenUtils;
-import com.sun.xml.internal.fastinfoset.stax.events.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +23,7 @@ import java.util.List;
  */
 @CrossOrigin(origins = "*")
 @RestController
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -30,19 +31,27 @@ public class UserController {
     @PostMapping("/login")
     public Result login(@RequestBody LoginForm loginForm) {
         UserDTO dto = userService.login(loginForm);
-        return Result.success(dto);
+        if(dto!=null){
+            return Result.success(dto,"登录成功！");
+        }else{
+            return Result.error("123","账号或密码错误！");
+        }
     }
 
     @PostMapping("/register")
     public Result register(@RequestBody LoginForm loginForm) {
         User user = userService.register(loginForm);
-        return Result.success(user);
+        if(user!=null){
+            return Result.success(user,"注册成功！");
+        }else{
+            return Result.error("123","注册失败！");
+        }
     }
 
     @GetMapping("/userinfo/{username}")
     public Result getUserInfoByName(@PathVariable String username) {
         User one = userService.getOne(username);
-        return Result.success(one);
+        return Result.success(one,"");
     }
 
     @GetMapping("/userid")
@@ -53,7 +62,7 @@ public class UserController {
     @GetMapping("/user/")
     public Result findAll() {
         List<User> list = userService.list();
-        return Result.success(list);
+        return Result.success(list,"");
     }
 
     @PostMapping("/user")
@@ -63,7 +72,7 @@ public class UserController {
     }
 
     @Authority(AuthorityType.requireAuthority)
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/delete/user/{id}")
     public Result deleteById(@PathVariable int id) {
         boolean isSuccessful = userService.removeById(id);
         if (isSuccessful) {
@@ -84,28 +93,28 @@ public class UserController {
         }
     }
 
-    @GetMapping("/user/page")
-    public Result findPage(@RequestParam int pageNum,
-                           @RequestParam int pageSize,
-                           String id,
-                           String username
-                           //String nickname
-                                          ) {
-        IPage<User> userPage = new Page<>(pageNum, pageSize);
-        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
-        if (!Util.isEmptyString(id)) {
-            userQueryWrapper.like("id", id);
-        }
-        if (!Util.isEmptyString(username)) {
-            userQueryWrapper.like("username", username);
-        }
-        //if (!Util.isEmptyString(nickname)) {
-        //    userQueryWrapper.like("nickname", nickname);
-        //}
-        userQueryWrapper.orderByDesc("id");
-        System.out.println("============" + TokenUtils.getCurrentUser());
-        return Result.success(userService.page(userPage, userQueryWrapper));
-    }
+//    @GetMapping("/user/page")
+//    public Result findPage(@RequestParam int pageNum,
+//                           @RequestParam int pageSize,
+//                           String id,
+//                           String username
+//                           //String nickname
+//                                          ) {
+//        IPage<User> userPage = new Page<>(pageNum, pageSize);
+//        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+//        if (!Util.isEmptyString(id)) {
+//            userQueryWrapper.like("id", id);
+//        }
+//        if (!Util.isEmptyString(username)) {
+//            userQueryWrapper.like("username", username);
+//        }
+//        //if (!Util.isEmptyString(nickname)) {
+//        //    userQueryWrapper.like("nickname", nickname);
+//        //}
+//        userQueryWrapper.orderByDesc("id");
+//        System.out.println("============" + TokenUtils.getCurrentUser());
+//        return Result.success(userService.page(userPage, userQueryWrapper));
+//    }
 
     /**
      * 重置密码

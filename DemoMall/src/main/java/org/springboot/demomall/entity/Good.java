@@ -14,7 +14,6 @@ public class Good extends Model<Good> {
     @TableId(value = "gid", type = IdType.AUTO)
     private Long gid;
 
-    @TableId(value = "uid", type = IdType.AUTO)
     private Integer uid;
 
     /**

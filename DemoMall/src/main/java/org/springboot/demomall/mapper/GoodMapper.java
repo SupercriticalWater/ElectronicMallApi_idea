@@ -14,6 +14,8 @@ import java.util.List;
 public interface GoodMapper extends BaseMapper<Good> {
     @Select("select * from good_standard where gid = #{gid}")
     List<GoodStandard> getStandardByGid(int gid);
+    @Select("select * from good where uid = #{uid} and is_deleted = 0")
+    List<GoodDTO> getGoodByUid(int uid);
 
     List<GoodDTO> findFrontGoods();
 

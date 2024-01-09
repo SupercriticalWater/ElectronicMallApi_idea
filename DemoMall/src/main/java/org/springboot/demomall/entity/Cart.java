@@ -15,7 +15,9 @@ public class Cart extends Model<Cart> {
     /**
      * 买家编号
      */
-    private Long uid;
+    private Integer uid;
+
+    private Integer seller;
 
     /**
      * 商品编号
@@ -45,12 +47,20 @@ public class Cart extends Model<Cart> {
         this.cid = cid;
     }
 
-    public Long getUid() {
+    public Integer getUid() {
         return uid;
     }
 
-    public void setUid(Long uid) {
+    public void setUid(Integer uid) {
         this.uid = uid;
+    }
+
+    public Integer getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Integer seller) {
+        this.seller = seller;
     }
 
     public Long getGid() {
@@ -90,6 +100,7 @@ public class Cart extends Model<Cart> {
         return "Cart{" +
                 "cid=" + cid +
                 ", uid=" + uid +
+                ", seller=" + seller +
                 ", gid=" + gid +
                 ", standard='" + standard + '\'' +
                 ", createTime='" + createTime + '\'' +

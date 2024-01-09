@@ -11,7 +11,7 @@
  Target Server Version : 80200
  File Encoding         : 65001
 
- Date: 09/01/2024 16:15:44
+ Date: 09/01/2024 23:46:25
 */
 
 SET NAMES utf8mb4;
@@ -35,6 +35,9 @@ CREATE TABLE `address`  (
 -- ----------------------------
 -- Records of address
 -- ----------------------------
+INSERT INTO `address` VALUES (1, '华子', '中山小区', '13867546787', 3);
+INSERT INTO `address` VALUES (2, '小安', '四季新城', '27653456789', 4);
+INSERT INTO `address` VALUES (3, '华子', '上海大学', '13867546787', 3);
 
 -- ----------------------------
 -- Table structure for cart
@@ -53,11 +56,13 @@ CREATE TABLE `cart`  (
   INDEX `cart_gid`(`gid`) USING BTREE,
   CONSTRAINT `cart_gid` FOREIGN KEY (`gid`) REFERENCES `good` (`gid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `cart_uid` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '购物车表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '购物车表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
+INSERT INTO `cart` VALUES (1, 3, 4, 1, '红色', 1, '2023-12-13 16:30:32');
+INSERT INTO `cart` VALUES (2, 5, 4, 1, '红色', 1, '2024-01-18 16:31:30');
 
 -- ----------------------------
 -- Table structure for category
@@ -96,16 +101,15 @@ CREATE TABLE `good`  (
   INDEX `category`(`category_id`) USING BTREE,
   CONSTRAINT `category` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `seller` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of good
 -- ----------------------------
-INSERT INTO `good` VALUES (1, 4, '马面裙', 1, '/a.png', '一条裙子', '2024-01-03 22:07:44', 10, 1000.00, 1, 0);
-INSERT INTO `good` VALUES (2, 4, '樱花流苏发簪', 2, '/b.png', '自制发簪', '2024-01-01 22:09:03', 5, 200.00, 1, 0);
+INSERT INTO `good` VALUES (1, 4, '马面裙', 1, '/files/a.jpg', '一条裙子', '2024-01-03 22:07:44', 10, 1000.00, 1, 0);
+INSERT INTO `good` VALUES (2, 4, '樱花流苏发簪', 2, '/files/b.jpg', '自制发簪', '2024-01-01 22:09:03', 5, 200.00, 1, 0);
 INSERT INTO `good` VALUES (3, 3, 'test', 1, '/test.ong', 'test', '2024-01-01 13:55:11', 5, 100.00, 0, 0);
 INSERT INTO `good` VALUES (4, 4, '白水晶手链', 2, NULL, '一条手链', '2024-01-08 14:14:30', 0, 0.00, 0, NULL);
-INSERT INTO `good` VALUES (5, 4, '白水晶手链', 2, NULL, '一条手链', '2024-01-09 11:23:02', 0, 0.00, NULL, 1);
 
 -- ----------------------------
 -- Table structure for good_standard
@@ -126,6 +130,7 @@ CREATE TABLE `good_standard`  (
 -- ----------------------------
 INSERT INTO `good_standard` VALUES (1, '红色', 130.00, 10, 14);
 INSERT INTO `good_standard` VALUES (1, '青色', 120.00, 10, 14);
+INSERT INTO `good_standard` VALUES (4, '菩提挂坠版', 200.00, 20, 7);
 
 -- ----------------------------
 -- Table structure for order_goods
@@ -187,7 +192,7 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (2, 'user', '/resources/avatar/09cd5add81ff4abfbd1ccf91b2e9c820.jpg', '123456', 'user');
+INSERT INTO `users` VALUES (2, 'user', '/resources/avatar/h09cd5add81ff4abfbd1ccf91b2e9c820.jpg', '123456', 'user');
 INSERT INTO `users` VALUES (3, 'water', '/resources/avatar/09cd5add81ff4abfbd1ccf91b2e9c820.jpg', '123456', 'admin');
 INSERT INTO `users` VALUES (4, 'Alina', '/test', '123456', 'user');
 INSERT INTO `users` VALUES (5, 'zhaoaa', NULL, '123456', 'user');

@@ -6,6 +6,7 @@ import org.springboot.demomall.common.Result;
 import org.springboot.demomall.entity.AuthorityType;
 import org.springboot.demomall.entity.Good;
 import org.springboot.demomall.entity.Standard;
+import org.springboot.demomall.entity.GoodStandard;
 import org.springboot.demomall.service.GoodService;
 import org.springboot.demomall.service.StandardService;
 import org.springframework.web.bind.annotation.*;
@@ -85,6 +86,46 @@ public class GoodController {
             @RequestParam(required = false) Integer categoryId) {
 
         return Result.success(goodService.findFullPage(pageNum,pageSize,searchText,categoryId),"查询成功！");
+    }
+    // 获取商品的规格信息
+    @GetMapping("/standard/{gid}")
+    public Result getStandard(@PathVariable int gid) {
+        List<GoodStandard> standards = goodService.getStandard(gid);
+        if (standards.isEmpty()) {
+            // 没有查询到规格信息
+            return Result.error(Constants.NO_RESULT, "未找到相关规格信息");
+        }
+        return Result.success(standards, "查询成功");
+    }
+
+
+    //保存商品的规格信息
+    @PostMapping("/standard")
+    public Result saveStandard(@RequestBody List<Standard> standards, @RequestParam int gid) {
+        //先删除全部旧记录
+        standardService.deleteAll(gid);
+        //然后插入新记录
+        for (Standard standard : standards) {
+            standard.setGid(gid);
+
+            if(!standardService.save(standard)){
+                return Result.error(Constants.CODE_500,"保存失败");
+            }
+        }
+        List<GoodStandard> standards_res = goodService.getStandard(gid);
+        return Result.success(standards_res,"保存成功");
+    }
+
+    //删除商品的规格信息
+    @Authority(AuthorityType.requireAuthority)
+    @DeleteMapping("/standard")
+    public Result delStandard(@RequestBody Standard standard) {
+        boolean delete = standardService.delete(standard);
+        if(delete) {
+            return Result.success(standard,"删除成功");
+        }else {
+            return Result.error(Constants.CODE_500,"删除失败");
+        }
     }
 
 }

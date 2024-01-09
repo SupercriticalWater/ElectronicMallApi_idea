@@ -70,7 +70,7 @@ public class GoodService extends ServiceImpl<GoodMapper, Good>{
     public List<GoodDTO> getGoodByUid(Integer uid) {
 
         List<GoodDTO> goods = goodMapper.getGoodByUid(uid);
-        if( goods.size()==0){
+        if( goods.isEmpty()){
             throw new ServiceException(Constants.NO_RESULT,"无结果");
         }
             return goods;
@@ -78,12 +78,12 @@ public class GoodService extends ServiceImpl<GoodMapper, Good>{
     }
 
     //查询商品的规格
-    public String getStandard(int gid){
+    public List<GoodStandard> getStandard(int gid){
         List<GoodStandard> standards = goodMapper.getStandardByGid(gid);
-        if(standards.size()==0){
+        if(standards.isEmpty()){
             throw new ServiceException(Constants.NO_RESULT,"无结果");
         }
-        return JSON.toJSONString(standards);
+        return standards;
     }
 
     //查询某商品的最低规格价

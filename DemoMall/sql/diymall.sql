@@ -11,7 +11,7 @@
  Target Server Version : 80200
  File Encoding         : 65001
 
- Date: 09/01/2024 13:38:43
+ Date: 09/01/2024 16:15:44
 */
 
 SET NAMES utf8mb4;
@@ -42,11 +42,12 @@ CREATE TABLE `address`  (
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart`  (
   `cid` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `uid` bigint NULL DEFAULT NULL COMMENT '用户id',
+  `seller` bigint NULL DEFAULT NULL COMMENT '卖家用户id',
+  `gid` bigint NULL DEFAULT NULL COMMENT '商品id',
+  `standard` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '商品规格',
   `count` int NULL DEFAULT NULL COMMENT '数量',
   `create_time` datetime NULL DEFAULT NULL COMMENT '加入时间',
-  `gid` bigint NULL DEFAULT NULL COMMENT '商品id',
-  `standard` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL,
-  `uid` bigint NULL DEFAULT NULL COMMENT '用户id',
   PRIMARY KEY (`cid`) USING BTREE,
   INDEX `cart_uid`(`uid`) USING BTREE,
   INDEX `cart_gid`(`gid`) USING BTREE,
@@ -87,9 +88,9 @@ CREATE TABLE `good`  (
   `description` varchar(1660) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '描述',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `sales` bigint NOT NULL DEFAULT 0 COMMENT '销量',
-  `sale_money` double(10, 2) UNSIGNED NULL DEFAULT NULL COMMENT '销售额',
-  `recommend` tinyint NULL DEFAULT NULL COMMENT '是否推荐',
-  `is_delete` tinyint NULL DEFAULT NULL COMMENT '是否删除',
+  `sale_money` double(10, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '销售额',
+  `recommend` tinyint NULL DEFAULT 0 COMMENT '是否推荐',
+  `is_delete` tinyint NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`gid`) USING BTREE,
   INDEX `seller`(`uid`) USING BTREE,
   INDEX `category`(`category_id`) USING BTREE,
@@ -103,8 +104,8 @@ CREATE TABLE `good`  (
 INSERT INTO `good` VALUES (1, 4, '马面裙', 1, '/a.png', '一条裙子', '2024-01-03 22:07:44', 10, 1000.00, 1, 0);
 INSERT INTO `good` VALUES (2, 4, '樱花流苏发簪', 2, '/b.png', '自制发簪', '2024-01-01 22:09:03', 5, 200.00, 1, 0);
 INSERT INTO `good` VALUES (3, 3, 'test', 1, '/test.ong', 'test', '2024-01-01 13:55:11', 5, 100.00, 0, 0);
-INSERT INTO `good` VALUES (4, 4, '白水晶手链', 2, NULL, '一条手链', '2024-01-08 14:14:30', 0, NULL, NULL, NULL);
-INSERT INTO `good` VALUES (5, 4, '白水晶手链', 2, NULL, '一条手链', '2024-01-09 11:23:02', 0, NULL, NULL, 1);
+INSERT INTO `good` VALUES (4, 4, '白水晶手链', 2, NULL, '一条手链', '2024-01-08 14:14:30', 0, 0.00, 0, NULL);
+INSERT INTO `good` VALUES (5, 4, '白水晶手链', 2, NULL, '一条手链', '2024-01-09 11:23:02', 0, 0.00, NULL, 1);
 
 -- ----------------------------
 -- Table structure for good_standard
@@ -115,7 +116,7 @@ CREATE TABLE `good_standard`  (
   `value` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL COMMENT '规格',
   `price` decimal(10, 2) NULL DEFAULT NULL COMMENT '价格',
   `store` bigint NULL DEFAULT NULL COMMENT '库存',
-  `processTime` bigint NULL DEFAULT NULL COMMENT '工期',
+  `process_time` bigint NULL DEFAULT NULL COMMENT '工期',
   PRIMARY KEY (`gid`, `value`) USING BTREE,
   CONSTRAINT `uid` FOREIGN KEY (`gid`) REFERENCES `good` (`gid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '商品规格表' ROW_FORMAT = DYNAMIC;

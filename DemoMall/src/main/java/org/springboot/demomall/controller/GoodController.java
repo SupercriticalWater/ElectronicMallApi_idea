@@ -23,8 +23,8 @@ public class GoodController {
     @Resource
     private StandardService standardService;
 
-    @PostMapping
-    public Result save(@RequestBody Good good) {
+    @PostMapping("/{uid}")
+    public Result save(@RequestBody Good good,@PathVariable Integer uid) {
         System.out.println(good);
         return Result.success(goodService.saveOrUpdateGood(good),"成功保存！");
     }
@@ -35,7 +35,7 @@ public class GoodController {
         return Result.success();
     }
 
-    @DeleteMapping("/{uid}/{gid}")
+    @DeleteMapping("/delete/{uid}/{gid}")
     public Result delete(@PathVariable Long gid, @PathVariable Integer uid) {
         goodService.deleteGood(gid,uid);
         return Result.success();
@@ -64,8 +64,8 @@ public class GoodController {
     //修改商品的推荐字段
     @Authority(AuthorityType.requireAuthority)
     @GetMapping("/recommend")
-    public Result setRecommend(@RequestParam Long gid,@RequestParam Integer uid,@RequestParam Boolean isRecommend){
-        return Result.success(goodService.setRecommend(gid,uid, isRecommend),"查询成功！");
+    public Result setRecommend(@RequestParam Long gid,@RequestParam Boolean isRecommend){
+        return Result.success(goodService.setRecommend(gid,isRecommend),"推荐成功！");
     }
 
     @GetMapping("/page")

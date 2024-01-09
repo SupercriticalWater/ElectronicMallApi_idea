@@ -11,7 +11,7 @@
  Target Server Version : 80200
  File Encoding         : 65001
 
- Date: 04/01/2024 18:10:25
+ Date: 09/01/2024 13:38:43
 */
 
 SET NAMES utf8mb4;
@@ -30,7 +30,7 @@ CREATE TABLE `address`  (
   PRIMARY KEY (`aid`) USING BTREE,
   INDEX `user`(`uid`) USING BTREE,
   CONSTRAINT `user` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '地址表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '地址表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of address
@@ -52,7 +52,7 @@ CREATE TABLE `cart`  (
   INDEX `cart_gid`(`gid`) USING BTREE,
   CONSTRAINT `cart_gid` FOREIGN KEY (`gid`) REFERENCES `good` (`gid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `cart_uid` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '购物车表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '购物车表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cart
@@ -66,11 +66,13 @@ CREATE TABLE `category`  (
   `category_id` bigint NOT NULL AUTO_INCREMENT COMMENT '分类编号',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '类别名称',
   PRIMARY KEY (`category_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of category
 -- ----------------------------
+INSERT INTO `category` VALUES (1, '服装');
+INSERT INTO `category` VALUES (2, '饰品');
 
 -- ----------------------------
 -- Table structure for good
@@ -82,22 +84,27 @@ CREATE TABLE `good`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '商品名称',
   `category_id` bigint NOT NULL COMMENT '分类编号',
   `imgs` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '商品图片',
-  `recommended` tinyint NULL DEFAULT NULL COMMENT '是否推荐',
-  `is_deleted` tinyint NULL DEFAULT NULL COMMENT '是否删除',
   `description` varchar(1660) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '描述',
-  `sales` bigint NOT NULL DEFAULT 0 COMMENT '销量',
-  `sale_money` double(10, 2) NULL DEFAULT NULL COMMENT '销售额',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `sales` bigint NOT NULL DEFAULT 0 COMMENT '销量',
+  `sale_money` double(10, 2) UNSIGNED NULL DEFAULT NULL COMMENT '销售额',
+  `recommend` tinyint NULL DEFAULT NULL COMMENT '是否推荐',
+  `is_delete` tinyint NULL DEFAULT NULL COMMENT '是否删除',
   PRIMARY KEY (`gid`) USING BTREE,
   INDEX `seller`(`uid`) USING BTREE,
   INDEX `category`(`category_id`) USING BTREE,
   CONSTRAINT `category` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `seller` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of good
 -- ----------------------------
+INSERT INTO `good` VALUES (1, 4, '马面裙', 1, '/a.png', '一条裙子', '2024-01-03 22:07:44', 10, 1000.00, 1, 0);
+INSERT INTO `good` VALUES (2, 4, '樱花流苏发簪', 2, '/b.png', '自制发簪', '2024-01-01 22:09:03', 5, 200.00, 1, 0);
+INSERT INTO `good` VALUES (3, 3, 'test', 1, '/test.ong', 'test', '2024-01-01 13:55:11', 5, 100.00, 0, 0);
+INSERT INTO `good` VALUES (4, 4, '白水晶手链', 2, NULL, '一条手链', '2024-01-08 14:14:30', 0, NULL, NULL, NULL);
+INSERT INTO `good` VALUES (5, 4, '白水晶手链', 2, NULL, '一条手链', '2024-01-09 11:23:02', 0, NULL, NULL, 1);
 
 -- ----------------------------
 -- Table structure for good_standard
@@ -116,6 +123,8 @@ CREATE TABLE `good_standard`  (
 -- ----------------------------
 -- Records of good_standard
 -- ----------------------------
+INSERT INTO `good_standard` VALUES (1, '红色', 130.00, 10, 14);
+INSERT INTO `good_standard` VALUES (1, '青色', 120.00, 10, 14);
 
 -- ----------------------------
 -- Table structure for order_goods
@@ -131,7 +140,7 @@ CREATE TABLE `order_goods`  (
   INDEX `ono`(`gid`) USING BTREE,
   INDEX `order_no`(`order_no`) USING BTREE,
   CONSTRAINT `ono` FOREIGN KEY (`gid`) REFERENCES `good` (`gid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of order_goods
@@ -153,8 +162,9 @@ CREATE TABLE `t_order`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `u_order`(`uid`) USING BTREE,
+  INDEX `order_no`(`order_no`) USING BTREE,
   CONSTRAINT `u_order` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '订单表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '订单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_order

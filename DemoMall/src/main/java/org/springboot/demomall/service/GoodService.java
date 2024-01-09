@@ -52,7 +52,7 @@ public class GoodService extends ServiceImpl<GoodMapper, Good>{
 
         //若redis中没有则去数据库查
         LambdaQueryWrapper<Good> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Good::getDelete,false);
+        queryWrapper.eq(Good::getIsDelete,false);
         queryWrapper.eq(Good::getGid,gid);
         Good dbGood = getOne(queryWrapper);
         if(dbGood!=null){
@@ -98,6 +98,10 @@ public class GoodService extends ServiceImpl<GoodMapper, Good>{
 
     //假删除
     public void deleteGood(Long gid,Integer uid) {
+        LambdaQueryWrapper<Good> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Good::getIsDelete,false);
+        queryWrapper.eq(Good::getGid,gid);
+
         redisTemplate.delete(GOOD_TOKEN_KEY+gid);
         goodMapper.fakeDelete(gid, uid);
     }
@@ -115,10 +119,9 @@ public class GoodService extends ServiceImpl<GoodMapper, Good>{
         return good.getGid();
     }
 
-    public boolean setRecommend(Long gid,Integer uid,Boolean isRecommend) {
+    public boolean setRecommend(Long gid,Boolean isRecommend) {
         LambdaUpdateWrapper<Good> goodsLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
         goodsLambdaUpdateWrapper.eq(Good::getGid,gid);
-        goodsLambdaUpdateWrapper.eq(Good::getUid,uid);
         goodsLambdaUpdateWrapper.set(Good::getRecommend,isRecommend);
         return update(goodsLambdaUpdateWrapper);
     }
@@ -143,7 +146,7 @@ public class GoodService extends ServiceImpl<GoodMapper, Good>{
             query.eq(Good::getCategoryId,categoryId);
         }
         //筛除掉已被删除的商品
-        query.eq(Good::getDelete,false);
+        query.eq(Good::getIsDelete,false);
         IPage<Good> page = this.page(new Page<>(pageNum, pageSize), query);
         //把good转为dto
         IPage<GoodDTO> goodDTOPage = page.convert(good -> {
@@ -168,7 +171,7 @@ public class GoodService extends ServiceImpl<GoodMapper, Good>{
             query.eq(Good::getCategoryId,categoryId);
         }
         //筛除掉已被删除的商品
-        query.eq(Good::getDelete,false);
+        query.eq(Good::getIsDelete,false);
         IPage<Good> page = this.page(new Page<>(pageNum, pageSize), query);
         for (Good good : page.getRecords()) {
             //附上最低价格

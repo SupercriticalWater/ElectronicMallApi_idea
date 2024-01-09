@@ -144,11 +144,11 @@ public class Good extends Model<Good> {
         this.recommend = recommend;
     }
 
-    public Boolean getDelete() {
+    public Boolean getIsDelete() {
         return isDelete;
     }
 
-    public void setDelete(Boolean delete) {
+    public void setIsDelete(Boolean delete) {
         isDelete = delete;
     }
 

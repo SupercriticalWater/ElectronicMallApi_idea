@@ -11,7 +11,7 @@
  Target Server Version : 80200
  File Encoding         : 65001
 
- Date: 09/01/2024 23:46:25
+ Date: 09/01/2024 23:57:11
 */
 
 SET NAMES utf8mb4;
@@ -106,10 +106,9 @@ CREATE TABLE `good`  (
 -- ----------------------------
 -- Records of good
 -- ----------------------------
-INSERT INTO `good` VALUES (1, 4, '马面裙', 1, '/files/a.jpg', '一条裙子', '2024-01-03 22:07:44', 10, 1000.00, 1, 0);
-INSERT INTO `good` VALUES (2, 4, '樱花流苏发簪', 2, '/files/b.jpg', '自制发簪', '2024-01-01 22:09:03', 5, 200.00, 1, 0);
-INSERT INTO `good` VALUES (3, 3, 'test', 1, '/test.ong', 'test', '2024-01-01 13:55:11', 5, 100.00, 0, 0);
-INSERT INTO `good` VALUES (4, 4, '白水晶手链', 2, NULL, '一条手链', '2024-01-08 14:14:30', 0, 0.00, 0, NULL);
+INSERT INTO `good` VALUES (1, 4, '马面裙', 1, '/files/a.jpg', '一条裙子', '2024-01-03 22:07:44', 10, 1300.00, 1, 0);
+INSERT INTO `good` VALUES (2, 4, '樱花流苏发簪', 2, '/files/b.jpg', '自制发簪', '2024-01-01 22:09:03', 5, 400.00, 1, 0);
+INSERT INTO `good` VALUES (4, 4, '白水晶手链', 2, '/files/c.jpg', '一条手链', '2024-01-08 14:14:30', 2, 400.00, 0, NULL);
 
 -- ----------------------------
 -- Table structure for good_standard
@@ -118,8 +117,8 @@ DROP TABLE IF EXISTS `good_standard`;
 CREATE TABLE `good_standard`  (
   `gid` bigint NOT NULL COMMENT '商品id',
   `value` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL COMMENT '规格',
-  `price` decimal(10, 2) NULL DEFAULT NULL COMMENT '价格',
-  `store` bigint NULL DEFAULT NULL COMMENT '库存',
+  `price` decimal(10, 2) NULL DEFAULT 0.00 COMMENT '价格',
+  `store` bigint NULL DEFAULT 0 COMMENT '库存',
   `process_time` bigint NULL DEFAULT NULL COMMENT '工期',
   PRIMARY KEY (`gid`, `value`) USING BTREE,
   CONSTRAINT `uid` FOREIGN KEY (`gid`) REFERENCES `good` (`gid`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -130,6 +129,8 @@ CREATE TABLE `good_standard`  (
 -- ----------------------------
 INSERT INTO `good_standard` VALUES (1, '红色', 130.00, 10, 14);
 INSERT INTO `good_standard` VALUES (1, '青色', 120.00, 10, 14);
+INSERT INTO `good_standard` VALUES (2, '无吊坠版', 60.00, 5, 10);
+INSERT INTO `good_standard` VALUES (2, '有吊坠版', 80.00, 5, 10);
 INSERT INTO `good_standard` VALUES (4, '菩提挂坠版', 200.00, 20, 7);
 
 -- ----------------------------

@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/avatar")
+@CrossOrigin
 public class AvatarController {
 
     @Resource
@@ -28,6 +29,7 @@ public class AvatarController {
         String url = avatarService.upload(file);
         return Result.success(url,"上传成功！");
     }
+
     //根据文件名下载文件，即文件的url
     @GetMapping("/{fileName}")
     public void download(@PathVariable String fileName, HttpServletResponse response){

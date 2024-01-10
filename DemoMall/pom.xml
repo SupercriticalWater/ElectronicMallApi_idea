@@ -60,7 +60,14 @@
             <version>5.7.21</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.sun.xml.fastinfoset</groupId>
+            <artifactId>FastInfoset</artifactId>
+            <version>1.2.18</version>
+        </dependency>
     </dependencies>
+
+
     <dependencyManagement>
         <dependencies>
             <dependency>

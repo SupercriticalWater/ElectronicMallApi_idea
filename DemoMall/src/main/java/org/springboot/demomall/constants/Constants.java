@@ -10,5 +10,5 @@ public class Constants {
     public static final String CODE_403 = "403";//拒绝执行
     //文件存储位置
     public static final String fileFolderPath = PathUtils.getClassLoadRootPath() + "/file/";
-    public static final String avatarFolderPath =  PathUtils.getClassLoadRootPath() + "/avatar/";
+    public static final String avatarFolderPath =  PathUtils.getClassLoadRootPath() + "/Avatar/";
 }

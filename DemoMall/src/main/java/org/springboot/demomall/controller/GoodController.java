@@ -53,10 +53,17 @@ public class GoodController {
     }
 
     @GetMapping
-    public Result findAll() {
+    public Result findFrontgoods() {
 
         return Result.success(goodService.findFrontGoods(),"查询成功！");
     }
+
+    @GetMapping("/all")
+    public Result findAll() {
+
+        return Result.success(goodService.findAllGoods(),"查询成功！");
+    }
+
 
     @GetMapping("/rank")
     public Result getSaleRank(@RequestParam int num){

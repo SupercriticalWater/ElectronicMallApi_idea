@@ -95,7 +95,9 @@ public class GoodService extends ServiceImpl<GoodMapper, Good>{
     public List<GoodDTO> findFrontGoods() {
         return goodMapper.findFrontGoods();
     }
-
+    public List<Good> findAllGoods() {
+        return goodMapper.findAllGoods();
+    }
     //假删除
     public void deleteGood(Long gid,Integer uid) {
         LambdaQueryWrapper<Good> queryWrapper = new LambdaQueryWrapper<>();

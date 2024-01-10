@@ -11,7 +11,7 @@
  Target Server Version : 80200
  File Encoding         : 65001
 
- Date: 10/01/2024 14:12:36
+ Date: 10/01/2024 17:39:27
 */
 
 SET NAMES utf8mb4;
@@ -81,8 +81,9 @@ CREATE TABLE `cart`  (
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
-INSERT INTO `cart` VALUES (1, 3, 4, 1, '红色', 1, '2023-12-13 16:30:32');
+INSERT INTO `cart` VALUES (1, 3, 4, 1, '青色', 6, '2023-12-13 16:30:32');
 INSERT INTO `cart` VALUES (2, 5, 4, 1, '红色', 1, '2024-01-18 16:31:30');
+INSERT INTO `cart` VALUES (7, 3, 4, 1, '红色', 1, '2024-01-10 17:26:23');
 
 -- ----------------------------
 -- Table structure for category

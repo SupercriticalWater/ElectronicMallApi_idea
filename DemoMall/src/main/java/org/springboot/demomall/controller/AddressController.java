@@ -52,7 +52,7 @@ public class AddressController {
     @PutMapping
     public Result update(@RequestBody Address address) {
         addressService.updateById(address);
-        return Result.success();
+        return Result.success(address,"地址更新成功");
     }
 
     /*

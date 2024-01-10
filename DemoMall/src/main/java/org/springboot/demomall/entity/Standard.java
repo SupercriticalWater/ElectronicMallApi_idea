@@ -1,5 +1,6 @@
 package org.springboot.demomall.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
@@ -10,6 +11,7 @@ public class Standard extends Model<Standard>{
     /**
      * 主键：商品编号
      */
+    @TableId
     private Integer gid;
     /**
      * 商品规格

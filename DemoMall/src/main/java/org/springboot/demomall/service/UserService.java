@@ -79,6 +79,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         if(user.getUid() != null) {
             // 修改Uid
             User old = this.baseMapper.selectById(user.getUid());
+            if(!ObjectUtils.isEmpty(this.getOne(user.getUsername()))) {
+                return Result.error("400", "用户名已存在");
+            }
+            else{
+            old.setUsername(ObjectUtils.isEmpty(user.getUsername()) ? old.getUsername() : user.getUsername());
             //old.setNickname(ObjectUtils.isEmpty(user.getNickname()) ? old.getNickname() : user.getNickname());
             old.setAvatarUrl(ObjectUtils.isEmpty(user.getAvatarUrl()) ? old.getAvatarUrl() : user.getAvatarUrl());
             old.setRole(ObjectUtils.isEmpty(user.getRole()) ? old.getRole() : user.getRole());
@@ -86,7 +91,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             //old.setEmail(ObjectUtils.isEmpty(user.getEmail()) ? old.getEmail() : user.getEmail());
             //old.setAddress(ObjectUtils.isEmpty(user.getAddress()) ? old.getAddress() : user.getAddress());
             super.updateById(old);
-            return Result.success(null,"修改成功");
+            return Result.success(null,"修改成功");}
         } else {
             // 新增
             if(!ObjectUtils.isEmpty(this.getOne(user.getUsername()))) {

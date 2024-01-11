@@ -119,7 +119,7 @@ public class UserController {
     /**
      * 重置密码
      *
-     * @param id          用户id
+     * @param uid          用户id
      * @param newPassword 新密码
      * @return 结果
      */

@@ -4,7 +4,7 @@ public class GoodStandard {
     private int gid;
     private String value;
     private double price;
-    private int process_time;
+    private int processTime;
     private int store;
 
     public int getGid() {
@@ -31,12 +31,12 @@ public class GoodStandard {
         this.price = price;
     }
 
-    public int getProcess_time() {
-        return process_time;
+    public int getProcessTime() {
+        return processTime;
     }
 
-    public void setProcess_time(int process_time) {
-        this.process_time = process_time;
+    public void setProcessTime(int process_time) {
+        this.processTime = process_time;
     }
 
     public int getStore() {
@@ -53,7 +53,7 @@ public class GoodStandard {
                 "gid=" + gid +
                 ", value='" + value + '\'' +
                 ", price=" + price +
-                ", process_time=" + process_time +
+                ", processTime=" + processTime +
                 ", store=" + store +
                 '}';
     }

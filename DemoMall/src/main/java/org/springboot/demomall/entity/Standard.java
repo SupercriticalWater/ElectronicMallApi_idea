@@ -24,7 +24,7 @@ public class Standard extends Model<Standard>{
     /**
      * 工期
      */
-    private Integer process_time;
+    private Integer processTime;
     /**
      * 库存
      */
@@ -54,12 +54,12 @@ public class Standard extends Model<Standard>{
         this.price = price;
     }
 
-    public Integer getProcess_time() {
-        return process_time;
+    public Integer getProcessTime() {
+        return processTime;
     }
 
-    public void setProcess_time(Integer process_time) {
-        this.process_time = process_time;
+    public void setProcess_time(Integer processTime) {
+        this.processTime = processTime;
     }
 
     public Integer getStore() {
@@ -76,7 +76,7 @@ public class Standard extends Model<Standard>{
                 "gid=" + gid +
                 ", value='" + value + '\'' +
                 ", price=" + price +
-                ", process_time=" + process_time +
+                ", processTime=" + processTime +
                 ", store=" + store +
                 '}';
     }

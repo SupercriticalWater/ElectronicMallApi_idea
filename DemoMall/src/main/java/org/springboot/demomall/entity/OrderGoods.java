@@ -11,7 +11,7 @@ public class OrderGoods extends Model<OrderGoods> {
      * 主键
      */
     @TableId(value = "id",type = IdType.AUTO)
-    private long id;
+    private Long id;
 
     /**
      * 订单编号
@@ -33,11 +33,11 @@ public class OrderGoods extends Model<OrderGoods> {
      */
     private String standard;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

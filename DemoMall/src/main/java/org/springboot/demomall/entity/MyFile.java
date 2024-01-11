@@ -10,7 +10,7 @@ public class MyFile {
     @TableId(
             type = IdType.AUTO
     )
-    private int id;
+    private Integer id;
     private String name;
     private String type;
     private long size;
@@ -34,11 +34,11 @@ public class MyFile {
         this.md5 = md5;
     }
 
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

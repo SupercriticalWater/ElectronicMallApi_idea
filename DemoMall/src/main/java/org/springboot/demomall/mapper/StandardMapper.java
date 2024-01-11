@@ -1,5 +1,6 @@
 package org.springboot.demomall.mapper;
 
+import org.apache.ibatis.annotations.Insert;
 import org.springboot.demomall.entity.Standard;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,6 +14,12 @@ public interface StandardMapper extends BaseMapper<Standard> {
 
     @Select("select store from good_standard where gid = #{gid} and value = #{standard}")
     int getStore(@Param("gid") long gid, @Param("standard")String standard);
+
+    @Insert("insert into good_standard(gid, value, price, store, process_time) values (#{gid}, #{value}, #{price},#{store}, #{processTime})")
+    public boolean addStandard(Standard standard);
+
+
+
 
 
 }

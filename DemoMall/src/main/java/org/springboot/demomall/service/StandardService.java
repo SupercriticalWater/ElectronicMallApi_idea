@@ -13,6 +13,24 @@ public class StandardService extends ServiceImpl<StandardMapper, Standard> {
     @Resource
     private StandardMapper standardMapper;
 
+    public Standard FindStandard(Standard standard) {
+        QueryWrapper<Standard> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("gid", standard.getGid());
+        queryWrapper.eq("value", standard.getValue());
+        Standard result = standardMapper.selectOne(queryWrapper);
+        return result;
+    }
+
+    public Standard FindStandardByPrikey(int gid, String value) {
+        QueryWrapper<Standard> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("gid", gid);
+        queryWrapper.eq("value", value);
+        Standard result = standardMapper.selectOne(queryWrapper);
+        return result;
+    }
+
+
+
     public boolean delete(Standard standard) {
         QueryWrapper<Standard> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("gid",standard.getGid());
@@ -24,6 +42,11 @@ public class StandardService extends ServiceImpl<StandardMapper, Standard> {
         QueryWrapper<Standard> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("gid",GoodId);
         remove(queryWrapper);
+    }
+
+    public boolean addOne(Standard standard)
+    {
+        return standardMapper.addStandard(standard);
     }
 
 

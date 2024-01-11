@@ -107,8 +107,8 @@ public class GoodController {
 
 
     //保存商品的规格信息
-    @PostMapping("/standard")
-    public Result saveStandard(@RequestBody List<Standard> standards, @RequestParam int gid) {
+    @PostMapping("/standardAll")
+    public Result saveStandardAll(@RequestBody List<Standard> standards, @RequestParam int gid) {
         //先删除全部旧记录
         standardService.deleteAll(gid);
         //然后插入新记录
@@ -121,6 +121,37 @@ public class GoodController {
         }
         List<GoodStandard> standards_res = goodService.getStandard(gid);
         return Result.success(standards_res,"保存成功");
+    }
+
+    //保存商品的规格信息
+    @PostMapping("/standard")
+    public Result saveStandard(@RequestBody Standard standard, @RequestParam int gid, @RequestParam String value) {
+
+        Standard oldstandard = standardService.FindStandardByPrikey(gid, value);
+        System.out.println(oldstandard);
+        //先删除全部旧记录
+        standardService.delete(oldstandard);
+        //然后插入新记录
+        standard.setGid(gid);
+
+        if (!standardService.save(standard)) {
+            return Result.error(Constants.CODE_500, "保存失败");
+        }
+
+        return Result.success();
+    }
+
+    //新增商品的规格信息
+
+    //插入一条新规格信息
+    @PostMapping("/standardone")
+    public Result insertStandard(@RequestBody Standard standard, @RequestParam int gid) {
+
+        if(standardService.FindStandard(standard) != null){
+            return Result.error(Constants.CODE_500,"规格信息已存在");
+        }
+        //standard.setGid(gid);
+        return Result.success(standardService.addOne(standard),"新增成功");
     }
 
     //删除商品的规格信息

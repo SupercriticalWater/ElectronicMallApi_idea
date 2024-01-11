@@ -124,8 +124,8 @@ public class UserController {
      * @return 结果
      */
     @GetMapping("/user/resetPassword")
-    public Result resetPassword(@RequestParam String id, @RequestParam String newPassword) {
-        userService.resetPassword(id, newPassword);
+    public Result resetPassword(@RequestParam Integer uid, @RequestParam String newPassword) {
+        userService.resetPassword(uid, newPassword);
         return Result.success();
     }
 }

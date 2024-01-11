@@ -111,11 +111,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     /**
      * 重置密码
      *
-     * @param id          用户id
+     * @param uid          用户id
      * @param newPassword 新密码
      */
-    public void resetPassword(String id, String newPassword) {
-        User user = this.getById(id);
+    public void resetPassword(Integer uid, String newPassword) {
+        User user = this.getById(uid);
         if(user == null) {
             return;
         }

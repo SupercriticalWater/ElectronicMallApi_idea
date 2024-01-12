@@ -74,6 +74,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         queryWrapper.eq("username",username);
         return getOne(queryWrapper);
     }
+    public User getOneByUid(Integer uid){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("uid",uid);
+        return getOne(queryWrapper);
+    }
 
     public Result saveUpdate(User user) {
         if(user.getUid() != null) {

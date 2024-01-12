@@ -65,6 +65,13 @@
             <artifactId>FastInfoset</artifactId>
             <version>1.2.18</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
     </dependencies>
 
 

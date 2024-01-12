@@ -55,6 +55,7 @@ public class Order extends Model<Order> {
      * 创建时间
      */
     private String createTime;
+    private String deadline;
 
     //该订单包含的商品信息
     @TableField(exist = false)
@@ -152,6 +153,14 @@ public class Order extends Model<Order> {
         this.cartId = cartId;
     }
 
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
@@ -164,6 +173,7 @@ public class Order extends Model<Order> {
                 ", linkAddress='" + linkAddress + '\'' +
                 ", state='" + state + '\'' +
                 ", createTime='" + createTime + '\'' +
+                ", deadline='" + deadline + '\'' +
                 ", goods='" + goods + '\'' +
                 ", cartId=" + cartId +
                 '}';

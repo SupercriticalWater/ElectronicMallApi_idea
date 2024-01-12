@@ -3,7 +3,7 @@ package org.springboot.demomall.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.sun.xml.internal.fastinfoset.stax.events.Util;
+//import com.sun.xml.internal.fastinfoset.stax.events.Util;
 import org.springboot.demomall.annotation.Authority;
 import org.springboot.demomall.common.Result;
 import org.springboot.demomall.constants.Constants;
@@ -99,28 +99,28 @@ public class UserController {
         return Result.success(one,"查询成功");
     }
 
-   @GetMapping("/user/page")
-    public Result findPage(@RequestParam int pageNum,
-                          @RequestParam int pageSize,
-                          String id,
-                          String username
-                         // String nickname
-                                        ) {
-        IPage<User> userPage = new Page<>(pageNum, pageSize);
-       QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
-        if (!Util.isEmptyString(id)) {
-            userQueryWrapper.like("id", id);
-        }
-       if (!Util.isEmptyString(username)) {
-           userQueryWrapper.like("username", username);
-        }
-        //if (!Util.isEmptyString(nickname)) {
-//        //    userQueryWrapper.like("nickname", nickname);
-//        //}
-        userQueryWrapper.orderByDesc("id");
-        System.out.println("============" + TokenUtils.getCurrentUser());
-        return Result.success(userService.page(userPage, userQueryWrapper),"分页查询成功");
-    }
+//   @GetMapping("/user/page")
+//    public Result findPage(@RequestParam int pageNum,
+//                          @RequestParam int pageSize,
+//                          String id,
+//                          String username
+//                         // String nickname
+//                                        ) {
+//        IPage<User> userPage = new Page<>(pageNum, pageSize);
+//       QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+//        if (!Util.isEmptyString(id)) {
+//            userQueryWrapper.like("id", id);
+//        }
+//       if (!Util.isEmptyString(username)) {
+//           userQueryWrapper.like("username", username);
+//        }
+//        //if (!Util.isEmptyString(nickname)) {
+////        //    userQueryWrapper.like("nickname", nickname);
+////        //}
+//        userQueryWrapper.orderByDesc("id");
+//        System.out.println("============" + TokenUtils.getCurrentUser());
+//        return Result.success(userService.page(userPage, userQueryWrapper),"分页查询成功");
+//    }
 
     /**
      * 重置密码

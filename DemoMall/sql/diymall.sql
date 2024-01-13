@@ -11,7 +11,7 @@
  Target Server Version : 80200
  File Encoding         : 65001
 
- Date: 10/01/2024 17:39:27
+ Date: 14/01/2024 00:24:30
 */
 
 SET NAMES utf8mb4;
@@ -30,7 +30,7 @@ CREATE TABLE `address`  (
   PRIMARY KEY (`aid`) USING BTREE,
   INDEX `user`(`uid`) USING BTREE,
   CONSTRAINT `user` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '地址表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '地址表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of address
@@ -38,6 +38,7 @@ CREATE TABLE `address`  (
 INSERT INTO `address` VALUES (1, '华子', '中山小区', '13867546787', 3);
 INSERT INTO `address` VALUES (2, '小安', '四季新城', '27653456789', 4);
 INSERT INTO `address` VALUES (3, '华子', '上海大学', '13867546787', 3);
+INSERT INTO `address` VALUES (4, '小李', '东华大学', '18675462567', 5);
 
 -- ----------------------------
 -- Table structure for avatar
@@ -50,7 +51,7 @@ CREATE TABLE `avatar`  (
   `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
   `md5` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of avatar
@@ -76,14 +77,14 @@ CREATE TABLE `cart`  (
   INDEX `cart_gid`(`gid`) USING BTREE,
   CONSTRAINT `cart_gid` FOREIGN KEY (`gid`) REFERENCES `good` (`gid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `cart_uid` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '购物车表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '购物车表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
-INSERT INTO `cart` VALUES (1, 3, 4, 1, '青色', 6, '2023-12-13 16:30:32');
-INSERT INTO `cart` VALUES (2, 5, 4, 1, '红色', 1, '2024-01-18 16:31:30');
+INSERT INTO `cart` VALUES (2, 5, 4, 1, '青色', 1, '2024-01-02 16:31:30');
 INSERT INTO `cart` VALUES (7, 3, 4, 1, '红色', 1, '2024-01-10 17:26:23');
+INSERT INTO `cart` VALUES (8, 5, 4, 4, '菩提吊坠版', 1, '2024-01-11 00:16:47');
 
 -- ----------------------------
 -- Table structure for category
@@ -93,13 +94,14 @@ CREATE TABLE `category`  (
   `category_id` bigint NOT NULL AUTO_INCREMENT COMMENT '分类编号',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '类别名称',
   PRIMARY KEY (`category_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of category
 -- ----------------------------
 INSERT INTO `category` VALUES (1, '服装');
 INSERT INTO `category` VALUES (2, '饰品');
+INSERT INTO `category` VALUES (3, '摆件');
 
 -- ----------------------------
 -- Table structure for good
@@ -122,14 +124,15 @@ CREATE TABLE `good`  (
   INDEX `category`(`category_id`) USING BTREE,
   CONSTRAINT `category` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `seller` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of good
 -- ----------------------------
-INSERT INTO `good` VALUES (1, 4, '马面裙', 1, '/files/a.jpg', '一条裙子', '2024-01-03 22:07:44', 10, 1300.00, 1, 0);
+INSERT INTO `good` VALUES (1, 4, '马面裙', 1, '/files/a.jpg', '一条裙子', '2024-01-03 22:07:44', 13, 1660.00, 1, 0);
 INSERT INTO `good` VALUES (2, 4, '樱花流苏发簪', 2, '/files/b.jpg', '自制发簪', '2024-01-01 22:09:03', 5, 400.00, 1, 0);
 INSERT INTO `good` VALUES (4, 4, '白水晶手链', 2, '/files/c.jpg', '一条手链', '2024-01-08 14:14:30', 2, 400.00, 0, NULL);
+INSERT INTO `good` VALUES (7, 4, '梅花刺绣斗篷', 1, '/files/e.png', '一件斗篷', '2024-01-11 18:57:07', 0, 0.00, 0, 0);
 
 -- ----------------------------
 -- Table structure for good_standard
@@ -149,10 +152,13 @@ CREATE TABLE `good_standard`  (
 -- Records of good_standard
 -- ----------------------------
 INSERT INTO `good_standard` VALUES (1, '红色', 130.00, 10, 14);
-INSERT INTO `good_standard` VALUES (1, '青色', 120.00, 10, 14);
+INSERT INTO `good_standard` VALUES (1, '青色', 120.00, 7, 14);
 INSERT INTO `good_standard` VALUES (2, '无吊坠版', 60.00, 5, 10);
 INSERT INTO `good_standard` VALUES (2, '有吊坠版', 80.00, 5, 10);
-INSERT INTO `good_standard` VALUES (4, '菩提挂坠版', 200.00, 20, 7);
+INSERT INTO `good_standard` VALUES (4, '菩提吊坠版', 200.00, 20, 20);
+INSERT INTO `good_standard` VALUES (4, '银杏吊坠版', 80.00, 15, 25);
+INSERT INTO `good_standard` VALUES (7, '厚款', 160.00, 10, 13);
+INSERT INTO `good_standard` VALUES (7, '薄款', 200.00, 10, 15);
 
 -- ----------------------------
 -- Table structure for order_goods
@@ -160,19 +166,20 @@ INSERT INTO `good_standard` VALUES (4, '菩提挂坠版', 200.00, 20, 7);
 DROP TABLE IF EXISTS `order_goods`;
 CREATE TABLE `order_goods`  (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `order_no` bigint NULL DEFAULT NULL COMMENT '订单id',
+  `order_id` bigint NULL DEFAULT NULL COMMENT '订单id',
   `gid` bigint NULL DEFAULT NULL COMMENT '商品id',
   `count` int NULL DEFAULT NULL COMMENT '数量',
   `standard` varchar(1600) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '规格',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `ono`(`gid`) USING BTREE,
-  INDEX `order_no`(`order_no`) USING BTREE,
+  INDEX `order_no`(`order_id`) USING BTREE,
   CONSTRAINT `ono` FOREIGN KEY (`gid`) REFERENCES `good` (`gid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of order_goods
 -- ----------------------------
+INSERT INTO `order_goods` VALUES (29, 34, 1, 3, '青色');
 
 -- ----------------------------
 -- Table structure for sys_file
@@ -229,21 +236,25 @@ CREATE TABLE `t_order`  (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
   `order_no` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '订单号',
   `total_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '总价',
+  `seller` bigint NULL DEFAULT NULL COMMENT '卖家id',
   `uid` bigint NULL DEFAULT NULL COMMENT '用户id',
   `link_user` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '联系人',
   `link_phone` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '联系电话',
   `link_address` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '地址',
   `state` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '订单状态',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `deadline` datetime NULL DEFAULT NULL COMMENT '按工期计算的截止时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `u_order`(`uid`) USING BTREE,
   INDEX `order_no`(`order_no`) USING BTREE,
   CONSTRAINT `u_order` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '订单表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '订单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_order
 -- ----------------------------
+INSERT INTO `t_order` VALUES (34, '20240113221326347086', 360.00, 4, 3, '华子', '13867546787', '上海大学', '已完成', '2024-01-13 22:13:26', '2024-01-27 22:13:27');
+INSERT INTO `t_order` VALUES (36, '20240114002252674673', 200.00, 4, 5, '小李', '18675462567', '东华大学', '待支付', '2024-01-14 00:22:52', '2024-01-24 00:22:52');
 
 -- ----------------------------
 -- Table structure for users
@@ -253,17 +264,17 @@ CREATE TABLE `users`  (
   `uid` bigint NOT NULL AUTO_INCREMENT COMMENT '用户编号',
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '用户名',
   `avatar_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '头像',
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '密码',
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '密码',
   `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '角色',
   PRIMARY KEY (`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES (2, 'user', '/avatar/h09cd5add81ff4abfbd1ccf91b2e9c820.jpg', '123456', 'user');
 INSERT INTO `users` VALUES (3, 'water', '/avatar/09cd5add81ff4abfbd1ccf91b2e9c820.jpg', '123456', 'admin');
-INSERT INTO `users` VALUES (4, 'Alina', '/test', '123456', 'user');
-INSERT INTO `users` VALUES (5, 'zhaoaa', NULL, '123456', 'user');
+INSERT INTO `users` VALUES (4, 'Alina', '/avatar/09cd5add81ff4abfbd1ccf91b2e9c820.jpg', '123456', 'user');
+INSERT INTO `users` VALUES (5, 'zhaoa1111', '/avatar/09cd5add81ff4abfbd1ccf91b2e9c820.jpg', '123456', 'user');
 
 SET FOREIGN_KEY_CHECKS = 1;

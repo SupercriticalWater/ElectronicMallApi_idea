@@ -16,7 +16,7 @@ public class OrderGoods extends Model<OrderGoods> {
     /**
      * 订单编号
      */
-    private long orderNo;
+    private long orderId;
 
     /**
      * 商品id
@@ -41,12 +41,12 @@ public class OrderGoods extends Model<OrderGoods> {
         this.id = id;
     }
 
-    public long getOrderNo() {
-        return orderNo;
+    public long getOrderId() {
+        return orderId;
     }
 
-    public void setOrderNo(long orderNo) {
-        this.orderNo = orderNo;
+    public void setOrderId(long orderNo) {
+        this.orderId = orderNo;
     }
 
     public long getGid() {
@@ -77,7 +77,7 @@ public class OrderGoods extends Model<OrderGoods> {
     public String toString() {
         return "OrderGoods{" +
                 "id=" + id +
-                ", orderNo=" + orderNo +
+                ", orderId=" + orderId +
                 ", gid=" + gid +
                 ", count=" + count +
                 ", standard='" + standard + '\'' +

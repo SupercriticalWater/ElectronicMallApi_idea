@@ -5,7 +5,7 @@
         insert into good(uid, name, category_id,imgs,description,  create_time) value (#{good.uid},#{good.name},#{good.categoryId},#{good.imgs}, #{good.description},#{good.createTime})
     </insert>
     <update id="saleGood">
-        update `good` set sales = sales + #{count} ,sale_money = sale_money + #{money} where good.id = #{id}
+        update `good` set sales = sales + #{count} ,sale_money = sale_money + #{money} where good.gid = #{gid}
     </update>
 
 

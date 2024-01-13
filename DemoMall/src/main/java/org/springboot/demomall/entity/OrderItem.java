@@ -16,7 +16,8 @@ public class OrderItem {
     /*
     商品数量
      */
-    private int num;
+    private int count;
+
 
     public long getGid() {
         return gid;
@@ -34,12 +35,12 @@ public class OrderItem {
         this.standard = standard;
     }
 
-    public int getNum() {
-        return num;
+    public int getCount() {
+        return count;
     }
 
-    public void setNum(int num) {
-        this.num = num;
+    public void setCount(int count) {
+        this.count = count;
     }
 
     @Override
@@ -47,7 +48,7 @@ public class OrderItem {
         return "OrderItem{" +
                 "gid=" + gid +
                 ", standard='" + standard + '\'' +
-                ", num=" + num +
+                ", count=" + count +
                 '}';
     }
 }

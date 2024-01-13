@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springboot.demomall.mapper.OrderMapper">
+    <resultMap id="goodMap" type="Map">
+        <result property="id" column="id"></result>
+        <result property="gid" column="gid"></result>
+        <result property="name" column="name"></result>
+        <result property="count" column="count"></result>
+        <result property="price" column="price"></result>
+        <result property="standard" column="standard"></result>
+        <result property="img" column="imgs"></result>
+    </resultMap>
+    <select id="selectByUid" parameterType="int" resultType="java.util.HashMap">
+        SELECT o.*, og.gid,good.`name` as good_name, og.count, og.standard, good.imgs
+        FROM t_order o, order_goods og ,good
+        WHERE o.id = og.order_id AND o.uid = #{uid} AND og.gid = good.gid
+        ORDER BY o.create_time DESC
+    </select>
+    <select id="selectByOrderNo" parameterType="String" resultMap="goodMap">
+        SELECT o.*, og.gid,good.`name` as name,  og.standard,gs.price ,og.count, good.imgs
+        FROM t_order o, order_goods og ,good,good_standard gs
+        WHERE o.id = og.order_id AND o.order_no = #{orderNo} AND og.gid = good.gid
+          AND gs.gid = og.gid AND gs.`value` = standard
+    </select>
+    <select id="selectBySeller" parameterType="int" resultType="java.util.HashMap">
+        SELECT o.*,og.gid,good.`name` as name, og.count, og.standard, good.imgs
+        FROM t_order o, order_goods og ,good
+        WHERE o.id = og.order_id AND o.seller = #{seller} AND og.gid = good.gid
+        ORDER BY o.create_time DESC
+    </select>
+</mapper>

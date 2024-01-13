@@ -25,6 +25,10 @@ public class Order extends Model<Order> {
      * 总价
      */
     private BigDecimal totalPrice;
+    /**
+     * 卖家id
+     */
+    private int seller;
 
     /**
      * 用户id
@@ -61,9 +65,10 @@ public class Order extends Model<Order> {
     @TableField(exist = false)
     private String goods;
 
+
     // 对应购物车id
     @TableField(exist = false)
-    private Long cartId;
+    private Long cid;
 
     public Long getId() {
         return id;
@@ -87,6 +92,14 @@ public class Order extends Model<Order> {
 
     public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public int getSeller() {
+        return seller;
+    }
+
+    public void setSeller(int seller) {
+        this.seller = seller;
     }
 
     public int getUid() {
@@ -145,12 +158,12 @@ public class Order extends Model<Order> {
         this.goods = goods;
     }
 
-    public Long getCartId() {
-        return cartId;
+    public Long getCid() {
+        return cid;
     }
 
-    public void setCartId(Long cartId) {
-        this.cartId = cartId;
+    public void setCid(Long cid) {
+        this.cid = cid;
     }
 
     public String getDeadline() {
@@ -167,6 +180,7 @@ public class Order extends Model<Order> {
                 "id=" + id +
                 ", orderNo='" + orderNo + '\'' +
                 ", totalPrice=" + totalPrice +
+                ", seller=" + seller +
                 ", uid=" + uid +
                 ", linkUser='" + linkUser + '\'' +
                 ", linkPhone='" + linkPhone + '\'' +
@@ -175,7 +189,7 @@ public class Order extends Model<Order> {
                 ", createTime='" + createTime + '\'' +
                 ", deadline='" + deadline + '\'' +
                 ", goods='" + goods + '\'' +
-                ", cartId=" + cartId +
+                ", cartId=" + cid +
                 '}';
     }
 }

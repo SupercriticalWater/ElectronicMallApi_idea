@@ -36,10 +36,10 @@ public class FavoriteController {
     删除
      */
     //将某个商品从收藏夹移除
-    @DeleteMapping("deleteone/{gid}")
-    public Result delete(@PathVariable Long gid){
-        favoriteService.delete(gid);
-        return Result.success(gid,"删除成功");
+    @DeleteMapping("deleteone/{fid}")
+    public Result delete(@PathVariable Long fid){
+        favoriteService.delete(fid);
+        return Result.success(fid,"删除成功");
     }
 
     //清空收藏夹

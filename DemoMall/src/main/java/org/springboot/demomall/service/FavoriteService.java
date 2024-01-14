@@ -18,9 +18,9 @@ public class FavoriteService extends ServiceImpl<FavoriteMapper, Favorite> {
     public List<Map<String,Object>> selectByUid(Integer uid){
         return favoriteMapper.selectByUid(uid);
     }
-    public void delete(long gid){
+    public void delete(long fid){
         QueryWrapper<Favorite> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("gid",gid);
+        queryWrapper.eq("fid",fid);
         remove(queryWrapper);
     }
 

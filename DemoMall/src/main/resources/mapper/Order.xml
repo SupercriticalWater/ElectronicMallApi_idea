@@ -11,7 +11,7 @@
         <result property="img" column="imgs"></result>
     </resultMap>
     <select id="selectByUid" parameterType="int" resultType="java.util.HashMap">
-        SELECT o.*, og.gid,good.`name` as good_name, og.count, og.standard, good.imgs
+        SELECT o.*, og.gid,good.`name` as name, og.count, og.standard, good.imgs
         FROM t_order o, order_goods og ,good
         WHERE o.id = og.order_id AND o.uid = #{uid} AND og.gid = good.gid
         ORDER BY o.create_time DESC

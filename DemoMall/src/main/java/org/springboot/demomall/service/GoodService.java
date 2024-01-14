@@ -67,9 +67,9 @@ public class GoodService extends ServiceImpl<GoodMapper, Good>{
     }
 
     //查找由某个user所贩卖的所有商品
-    public List<GoodDTO> getGoodByUid(Integer uid) {
+    public List<Good> getGoodByUid(Integer uid) {
 
-        List<GoodDTO> goods = goodMapper.getGoodByUid(uid);
+        List<Good> goods = goodMapper.getGoodByUid(uid);
         if( goods.isEmpty()){
             throw new ServiceException(Constants.NO_RESULT,"无结果");
         }

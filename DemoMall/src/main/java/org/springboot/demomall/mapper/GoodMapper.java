@@ -19,8 +19,8 @@ public interface GoodMapper extends BaseMapper<Good> {
     List<GoodDTO> getGoodByGid(int gid);
 
     @Select("select * from good where uid = #{uid} and is_delete = 0")
-    List<GoodDTO> getGoodByUid(int uid);
-    @Select("select * from good")
+    List<Good> getGoodByUid(int uid);
+    @Select("select * from good where is_delete = 0")
     List<Good> findAllGoods();
     List<GoodDTO> findFrontGoods();
 

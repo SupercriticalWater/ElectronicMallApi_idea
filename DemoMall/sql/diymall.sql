@@ -11,7 +11,7 @@
  Target Server Version : 80200
  File Encoding         : 65001
 
- Date: 14/01/2024 00:24:30
+ Date: 14/01/2024 15:47:08
 */
 
 SET NAMES utf8mb4;
@@ -104,6 +104,30 @@ INSERT INTO `category` VALUES (2, '饰品');
 INSERT INTO `category` VALUES (3, '摆件');
 
 -- ----------------------------
+-- Table structure for favorite
+-- ----------------------------
+DROP TABLE IF EXISTS `favorite`;
+CREATE TABLE `favorite`  (
+  `fid` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `uid` bigint NULL DEFAULT NULL COMMENT '用户id',
+  `gid` bigint NULL DEFAULT NULL COMMENT '商品id',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商品名称',
+  `imgs` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商品图片',
+  PRIMARY KEY (`fid`) USING BTREE,
+  INDEX `gid`(`gid`) USING BTREE,
+  INDEX `uid`(`uid`) USING BTREE,
+  CONSTRAINT `favorite_ibfk_1` FOREIGN KEY (`gid`) REFERENCES `good` (`gid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `favorite_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of favorite
+-- ----------------------------
+INSERT INTO `favorite` VALUES (1, 2, 2, '樱花流苏发簪', '/files/b.jpg');
+INSERT INTO `favorite` VALUES (2, 2, 7, '梅花刺绣斗篷', '/files/e.png');
+INSERT INTO `favorite` VALUES (5, 3, 4, '白水晶手链', '/files/c.jpg');
+
+-- ----------------------------
 -- Table structure for good
 -- ----------------------------
 DROP TABLE IF EXISTS `good`;
@@ -180,6 +204,7 @@ CREATE TABLE `order_goods`  (
 -- Records of order_goods
 -- ----------------------------
 INSERT INTO `order_goods` VALUES (29, 34, 1, 3, '青色');
+INSERT INTO `order_goods` VALUES (30, 36, 4, 1, '菩提吊坠版');
 
 -- ----------------------------
 -- Table structure for sys_file
@@ -263,7 +288,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`  (
   `uid` bigint NOT NULL AUTO_INCREMENT COMMENT '用户编号',
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '用户名',
-  `avatar_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '头像',
+  `avatar_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '/avatar/a.png' COMMENT '头像',
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '密码',
   `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '角色',
   PRIMARY KEY (`uid`) USING BTREE

@@ -1,11 +1,13 @@
 package org.springboot.demomall.service;
 
+import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.ibatis.annotations.Param;
 import org.springboot.demomall.constants.Constants;
 import org.springboot.demomall.entity.*;
 import org.springboot.demomall.exception.ServiceException;
@@ -18,6 +20,7 @@ import org.springboot.demomall.mapper.StandardMapper;
 import org.springboot.demomall.utils.TokenUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -29,8 +32,11 @@ import java.util.List;
 import java.util.Map;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import org.springframework.stereotype.Component;
 
 import static org.springboot.demomall.constants.RedisConstants.GOOD_TOKEN_KEY;
+
+@Component
 @Service
 public class OrderService extends ServiceImpl<OrderMapper, Order> {
     @Resource
@@ -151,13 +157,34 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
             valueOperations.set(redisKey, good);
         }
     }
+    //每隔5秒自动更新超时订单的状态为“已超时”
+    @Scheduled(cron="0/5 * *  * * ? ")
+    public void AutoUpdating(){
+        String t = DateUtil.now();
+        //System.out.println(t);
+          List<String> res = orderMapper.selectLate(t);
+          for (String item: res){
+              orderMapper.Belate(item);
+              System.out.println(t);
+              System.out.println("查询到超时订单，已自动更新订单状态 [" + item + "]");
+          }
+
+    }
 
     public List<Map<String, Object>> selectByUid(int uid) {
         return orderMapper.selectByUid(uid);
     }
 
+    public List<Map<String, Object>> selectByUidAndState(@Param("uid")int uid, @Param("state")String state){
+        return orderMapper.selectByUidAndState(uid, state);
+    }
+
     public List<Map<String, Object>> selectBySeller(int seller) {
         return orderMapper.selectBySeller(seller);
+    }
+
+    public List<Map<String, Object>> selectBySellerAndState(@Param("seller")int seller, @Param("state")String state){
+        return orderMapper.selectBySellerAndState(seller, state);
     }
 
     public boolean receiveOrder(String orderNo) {

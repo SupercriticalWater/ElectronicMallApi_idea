@@ -28,4 +28,20 @@
         WHERE o.id = og.order_id AND o.seller = #{seller} AND og.gid = good.gid
         ORDER BY o.create_time DESC
     </select>
+    <select id="selectByUidAndState" resultType="java.util.Map">
+        SELECT o.*, og.gid, good.`name` as name, og.count, og.standard, good.imgs
+        FROM t_order o
+                 JOIN order_goods og ON o.id = og.order_id
+                 JOIN good ON og.gid = good.gid
+        WHERE o.uid = #{uid} AND o.state = #{state}
+        ORDER BY o.create_time DESC
+    </select>
+    <select id="selectBySellerAndState" resultType="java.util.Map">
+        SELECT o.*, og.gid, good.`name` as name, og.count, og.standard, good.imgs
+        FROM t_order o
+                 JOIN order_goods og ON o.id = og.order_id
+                 JOIN good ON og.gid = good.gid
+        WHERE o.seller = #{seller} AND o.state = #{state}
+        ORDER BY o.create_time DESC
+    </select>
 </mapper>

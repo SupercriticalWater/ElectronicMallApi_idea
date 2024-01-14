@@ -29,9 +29,19 @@ public class OrderController {
         return Result.success(orderService.selectByUid(uid),"查询成功！");
     }
 
+    @GetMapping("/uidAndState")
+    public Result selectByUidAndState(@RequestParam int uid,@RequestParam String state) {
+        return Result.success(orderService.selectByUidAndState(uid,state),"查询成功！");
+    }
+
     @GetMapping("/seller/{seller}")
     public Result selectBySeller(@PathVariable int seller) {
         return Result.success(orderService.selectBySeller(seller),"查询成功！");
+    }
+
+    @GetMapping("/sellerAndState")
+    public Result selectBySellerAndState(@RequestParam int seller,@RequestParam String state) {
+        return Result.success(orderService.selectBySellerAndState(seller,state),"查询成功！");
     }
 
     @GetMapping("/orderNo/{orderNo}")

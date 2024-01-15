@@ -11,7 +11,7 @@
  Target Server Version : 80200
  File Encoding         : 65001
 
- Date: 14/01/2024 15:47:08
+ Date: 15/01/2024 15:58:28
 */
 
 SET NAMES utf8mb4;
@@ -51,7 +51,7 @@ CREATE TABLE `avatar`  (
   `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
   `md5` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of avatar
@@ -77,7 +77,7 @@ CREATE TABLE `cart`  (
   INDEX `cart_gid`(`gid`) USING BTREE,
   CONSTRAINT `cart_gid` FOREIGN KEY (`gid`) REFERENCES `good` (`gid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `cart_uid` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '购物车表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '购物车表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cart
@@ -125,7 +125,6 @@ CREATE TABLE `favorite`  (
 -- ----------------------------
 INSERT INTO `favorite` VALUES (1, 2, 2, '樱花流苏发簪', '/files/b.jpg');
 INSERT INTO `favorite` VALUES (2, 2, 7, '梅花刺绣斗篷', '/files/e.png');
-INSERT INTO `favorite` VALUES (5, 3, 4, '白水晶手链', '/files/c.jpg');
 
 -- ----------------------------
 -- Table structure for good
@@ -185,6 +184,31 @@ INSERT INTO `good_standard` VALUES (7, '厚款', 160.00, 10, 13);
 INSERT INTO `good_standard` VALUES (7, '薄款', 200.00, 10, 15);
 
 -- ----------------------------
+-- Table structure for message
+-- ----------------------------
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE `message`  (
+  `mid` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `sender` bigint NOT NULL COMMENT '发送方用户id',
+  `receiver` bigint NOT NULL COMMENT '接收方用户id',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '标题',
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '消息内容',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '发送时间',
+  PRIMARY KEY (`mid`) USING BTREE,
+  INDEX `sender_uid`(`sender`) USING BTREE,
+  INDEX `receiver_uid`(`receiver`) USING BTREE,
+  CONSTRAINT `receiver_uid` FOREIGN KEY (`receiver`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sender_uid` FOREIGN KEY (`sender`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of message
+-- ----------------------------
+INSERT INTO `message` VALUES (1, 2, 3, 'TestTitle', 'TestContent', '2024-01-12 13:49:52');
+INSERT INTO `message` VALUES (2, 3, 2, 'hello', 'world', '2024-01-13 13:50:29');
+INSERT INTO `message` VALUES (4, 5, 3, 'test add message', 'hello world!', '2024-01-15 15:53:34');
+
+-- ----------------------------
 -- Table structure for order_goods
 -- ----------------------------
 DROP TABLE IF EXISTS `order_goods`;
@@ -198,7 +222,7 @@ CREATE TABLE `order_goods`  (
   INDEX `ono`(`gid`) USING BTREE,
   INDEX `order_no`(`order_id`) USING BTREE,
   CONSTRAINT `ono` FOREIGN KEY (`gid`) REFERENCES `good` (`gid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of order_goods
@@ -273,13 +297,15 @@ CREATE TABLE `t_order`  (
   INDEX `u_order`(`uid`) USING BTREE,
   INDEX `order_no`(`order_no`) USING BTREE,
   CONSTRAINT `u_order` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '订单表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '订单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_order
 -- ----------------------------
 INSERT INTO `t_order` VALUES (34, '20240113221326347086', 360.00, 4, 3, '华子', '13867546787', '上海大学', '已完成', '2024-01-13 22:13:26', '2024-01-27 22:13:27');
-INSERT INTO `t_order` VALUES (36, '20240114002252674673', 200.00, 4, 5, '小李', '18675462567', '东华大学', '待支付', '2024-01-14 00:22:52', '2024-01-24 00:22:52');
+INSERT INTO `t_order` VALUES (36, '20240114002252674673', 200.00, 4, 5, '小李', '18675462567', '东华大学', '已完成', '2024-01-14 00:22:52', '2024-01-24 00:22:52');
+INSERT INTO `t_order` VALUES (37, 'testorder', 100.00, 4, 3, '华子', '13867546787', '上海大学', '已超时', '2023-12-31 16:56:03', '2024-01-14 18:26:00');
+INSERT INTO `t_order` VALUES (38, 'testtime2', 100.00, 4, 3, '华子', '13867546787', '上海大学', '已超时', '2024-01-14 17:50:07', '2024-01-14 18:27:11');
 
 -- ----------------------------
 -- Table structure for users

@@ -11,7 +11,7 @@
  Target Server Version : 80200
  File Encoding         : 65001
 
- Date: 15/01/2024 15:58:28
+ Date: 16/01/2024 12:01:42
 */
 
 SET NAMES utf8mb4;
@@ -59,6 +59,24 @@ CREATE TABLE `avatar`  (
 INSERT INTO `avatar` VALUES (1, 'jpg', 492, '/avatar/978418fbe75243b4ba38da389a468b78.jpg', '1e5802c8b96198fd524cc91ad3f9d476');
 INSERT INTO `avatar` VALUES (2, 'jpg', 146, '/avatar/e8663626d17b41bd89707299fcd5ac81.jpg', '5c072037e4e9662831fe448e28795770');
 INSERT INTO `avatar` VALUES (3, 'jpg', 175, '/avatar/09cd5add81ff4abfbd1ccf91b2e9c820.jpg', '507704f05fbca53793bce9970b40e6c8');
+
+-- ----------------------------
+-- Table structure for carousel
+-- ----------------------------
+DROP TABLE IF EXISTS `carousel`;
+CREATE TABLE `carousel`  (
+  `carousel_id` bigint NOT NULL AUTO_INCREMENT COMMENT '轮播id',
+  `file_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '轮播图url',
+  `show_order` bigint NOT NULL COMMENT '轮播顺序',
+  PRIMARY KEY (`carousel_id`) USING BTREE,
+  INDEX `file_url`(`file_url`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of carousel
+-- ----------------------------
+INSERT INTO `carousel` VALUES (1, '/file/IMG_2730.JPG', 1);
+INSERT INTO `carousel` VALUES (2, '/file/IMG_2731.JPG', 2);
 
 -- ----------------------------
 -- Table structure for cart
@@ -209,6 +227,29 @@ INSERT INTO `message` VALUES (2, 3, 2, 'hello', 'world', '2024-01-13 13:50:29');
 INSERT INTO `message` VALUES (4, 5, 3, 'test add message', 'hello world!', '2024-01-15 15:53:34');
 
 -- ----------------------------
+-- Table structure for news
+-- ----------------------------
+DROP TABLE IF EXISTS `news`;
+CREATE TABLE `news`  (
+  `nid` bigint NOT NULL AUTO_INCREMENT,
+  `file_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `show_order` bigint NULL DEFAULT NULL,
+  PRIMARY KEY (`nid`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of news
+-- ----------------------------
+INSERT INTO `news` VALUES (1, '/file/IMG_2732.JPG', 2);
+INSERT INTO `news` VALUES (2, '/file/IMG_2733.JPG', 1);
+INSERT INTO `news` VALUES (3, '/file/IMG_2734.JPG', 6);
+INSERT INTO `news` VALUES (4, '/file/IMG_2735.JPG', 3);
+INSERT INTO `news` VALUES (5, '/file/IMG_2736.JPG', 4);
+INSERT INTO `news` VALUES (6, '/file/IMG_2737.JPG', 5);
+INSERT INTO `news` VALUES (7, '/file/IMG_2738.JPG', 7);
+INSERT INTO `news` VALUES (8, 'IMG_2732.JPG', 8);
+
+-- ----------------------------
 -- Table structure for order_goods
 -- ----------------------------
 DROP TABLE IF EXISTS `order_goods`;
@@ -297,7 +338,7 @@ CREATE TABLE `t_order`  (
   INDEX `u_order`(`uid`) USING BTREE,
   INDEX `order_no`(`order_no`) USING BTREE,
   CONSTRAINT `u_order` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '订单表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '订单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_order

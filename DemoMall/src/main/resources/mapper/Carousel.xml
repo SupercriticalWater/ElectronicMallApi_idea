@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springboot.demomall.mapper.CarouselMapper">
+
+    <select id="getAllCarousel" resultType="org.springboot.demomall.entity.Carousel">
+        SELECT * FROM carousel ORDER BY show_order ASC LIMIT 6
+    </select>
+</mapper>

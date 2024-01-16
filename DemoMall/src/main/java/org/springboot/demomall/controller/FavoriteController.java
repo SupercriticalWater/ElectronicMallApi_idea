@@ -49,4 +49,14 @@ public class FavoriteController {
         return Result.success();
     }
 
+    //判断商品是否已存在于该收藏夹
+    @GetMapping("/isInFavorite")
+    public Result isInFavorite(@RequestParam Long uid ,@RequestParam Long gid) {
+        Favorite favorite = favoriteService.findFavorite(uid,gid);
+        if(favorite!= null){
+            return Result.success(favorite,"该用户收藏夹中已存在该商品");
+        }
+        return Result.success(favorite,"该用户收藏夹中不存在该商品");
+    }
+
 }

@@ -101,6 +101,12 @@ public class OrderController {
         return Result.success();
     }
 
+    @GetMapping("/ReturnOrder/{orderNo}")
+    public Result ReturnOrder(@PathVariable String orderNo){
+        orderService.ReturnOrder(orderNo);
+        return Result.success();
+    }
+
 
 
     //发货

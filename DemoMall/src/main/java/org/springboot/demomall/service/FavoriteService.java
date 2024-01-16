@@ -31,5 +31,11 @@ public class FavoriteService extends ServiceImpl<FavoriteMapper, Favorite> {
     }
 
 
+    public Favorite findFavorite(long uid, long gid){
+        QueryWrapper<Favorite> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("uid", uid);
+        queryWrapper.eq("gid", gid);
+        return favoriteMapper.selectOne(queryWrapper);
+    }
 
 }

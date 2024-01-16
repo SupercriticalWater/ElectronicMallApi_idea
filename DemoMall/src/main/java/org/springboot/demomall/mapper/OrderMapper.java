@@ -16,6 +16,8 @@ public interface OrderMapper extends BaseMapper<Order> {
     @Update("update t_order set state = '已支付' where order_no = #{orderNo}")
     void payOrder(String orderNo);
 
+    @Update("update t_order set state = '已退货' where order_no = #{orderNo}")
+    boolean ReturnOrder(String orderNo);
 
 
     @Update("update t_order set state = '制作中' where order_no = #{orderNo}")

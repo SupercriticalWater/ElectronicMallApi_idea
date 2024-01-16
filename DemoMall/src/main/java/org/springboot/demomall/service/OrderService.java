@@ -203,6 +203,10 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
         return orderMapper.Belate(orderNo);
     }
 
+    public boolean ReturnOrder(String orderNo) {
+        return orderMapper.ReturnOrder(orderNo);
+    }
+
     public boolean AfterSales(String orderNo) {
         return orderMapper.AfterSalesOrder(orderNo);
     }

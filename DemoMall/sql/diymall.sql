@@ -11,7 +11,7 @@
  Target Server Version : 80200
  File Encoding         : 65001
 
- Date: 16/01/2024 12:01:42
+ Date: 16/01/2024 22:40:51
 */
 
 SET NAMES utf8mb4;
@@ -67,16 +67,16 @@ DROP TABLE IF EXISTS `carousel`;
 CREATE TABLE `carousel`  (
   `carousel_id` bigint NOT NULL AUTO_INCREMENT COMMENT '轮播id',
   `file_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '轮播图url',
-  `show_order` bigint NOT NULL COMMENT '轮播顺序',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '文字信息',
   PRIMARY KEY (`carousel_id`) USING BTREE,
   INDEX `file_url`(`file_url`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '轮播图' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of carousel
 -- ----------------------------
-INSERT INTO `carousel` VALUES (1, '/file/IMG_2730.JPG', 1);
-INSERT INTO `carousel` VALUES (2, '/file/IMG_2731.JPG', 2);
+INSERT INTO `carousel` VALUES (1, '/file/IMG_2730.JPG', '轮播图1');
+INSERT INTO `carousel` VALUES (2, '/file/IMG_2731.JPG', '轮播图2');
 
 -- ----------------------------
 -- Table structure for cart
@@ -217,7 +217,7 @@ CREATE TABLE `message`  (
   INDEX `receiver_uid`(`receiver`) USING BTREE,
   CONSTRAINT `receiver_uid` FOREIGN KEY (`receiver`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `sender_uid` FOREIGN KEY (`sender`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of message
@@ -225,6 +225,15 @@ CREATE TABLE `message`  (
 INSERT INTO `message` VALUES (1, 2, 3, 'TestTitle', 'TestContent', '2024-01-12 13:49:52');
 INSERT INTO `message` VALUES (2, 3, 2, 'hello', 'world', '2024-01-13 13:50:29');
 INSERT INTO `message` VALUES (4, 5, 3, 'test add message', 'hello world!', '2024-01-15 15:53:34');
+INSERT INTO `message` VALUES (6, 1, 3, '订单超时通知', '很抱歉，您的订单 【testorder】已超时，您可联系商家进行协商与处理', '2024-01-16 16:58:51');
+INSERT INTO `message` VALUES (7, 1, 3, '订单超时通知', '很抱歉，您的订单 【testorder】已超时，您可联系商家进行协商与处理, 感谢您的理解！', '2024-01-16 22:20:00');
+INSERT INTO `message` VALUES (8, 1, 3, '发货通知', '亲爱的顾客，您的订单 【20240113221326347086】已发货，请您在收到商品后及时确认！', '2024-01-16 22:23:32');
+INSERT INTO `message` VALUES (9, 1, 4, '收货成功通知', '亲爱的商家，您的订单 【20240113221326347086】已成功被买家确认收货，请您及时核实并选择完成订单！', '2024-01-16 22:24:13');
+INSERT INTO `message` VALUES (10, 1, 4, '收货成功通知', '商家您好，您的订单 【20240113221326347086】已成功被买家确认收货，请您及时核实并选择完成订单！', '2024-01-16 22:30:22');
+INSERT INTO `message` VALUES (11, 1, 3, '售后服务通知', '亲爱的顾客，您的订单 【20240113221326347086】已进入售后状态，请您耐心等待商家处理！', '2024-01-16 22:31:01');
+INSERT INTO `message` VALUES (12, 1, 4, '售后服务通知', '您的订单 【20240113221326347086】已进入售后状态，请您及时处理！', '2024-01-16 22:31:01');
+INSERT INTO `message` VALUES (13, 1, 3, '订单超时通知', '很抱歉，您的订单 【testorder】已超时，您可联系商家进行协商与处理, 感谢您的理解！', '2024-01-16 22:31:45');
+INSERT INTO `message` VALUES (14, 1, 4, '订单超时通知', '您的订单 【testorder】已超时，请您及时处理并联系买家！', '2024-01-16 22:31:45');
 
 -- ----------------------------
 -- Table structure for news
@@ -233,21 +242,20 @@ DROP TABLE IF EXISTS `news`;
 CREATE TABLE `news`  (
   `nid` bigint NOT NULL AUTO_INCREMENT,
   `file_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `show_order` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`nid`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of news
 -- ----------------------------
-INSERT INTO `news` VALUES (1, '/file/IMG_2732.JPG', 2);
-INSERT INTO `news` VALUES (2, '/file/IMG_2733.JPG', 1);
-INSERT INTO `news` VALUES (3, '/file/IMG_2734.JPG', 6);
-INSERT INTO `news` VALUES (4, '/file/IMG_2735.JPG', 3);
-INSERT INTO `news` VALUES (5, '/file/IMG_2736.JPG', 4);
-INSERT INTO `news` VALUES (6, '/file/IMG_2737.JPG', 5);
-INSERT INTO `news` VALUES (7, '/file/IMG_2738.JPG', 7);
-INSERT INTO `news` VALUES (8, 'IMG_2732.JPG', 8);
+INSERT INTO `news` VALUES (1, '/file/IMG_2732.JPG');
+INSERT INTO `news` VALUES (2, '/file/IMG_2733.JPG');
+INSERT INTO `news` VALUES (3, '/file/IMG_2734.JPG');
+INSERT INTO `news` VALUES (4, '/file/IMG_2735.JPG');
+INSERT INTO `news` VALUES (5, '/file/IMG_2736.JPG');
+INSERT INTO `news` VALUES (6, '/file/IMG_2737.JPG');
+INSERT INTO `news` VALUES (7, '/file/IMG_2738.JPG');
+INSERT INTO `news` VALUES (8, 'IMG_2732.JPG');
 
 -- ----------------------------
 -- Table structure for order_goods
@@ -270,6 +278,7 @@ CREATE TABLE `order_goods`  (
 -- ----------------------------
 INSERT INTO `order_goods` VALUES (29, 34, 1, 3, '青色');
 INSERT INTO `order_goods` VALUES (30, 36, 4, 1, '菩提吊坠版');
+INSERT INTO `order_goods` VALUES (31, 37, 4, 1, '菩提吊坠版');
 
 -- ----------------------------
 -- Table structure for sys_file
@@ -343,7 +352,7 @@ CREATE TABLE `t_order`  (
 -- ----------------------------
 -- Records of t_order
 -- ----------------------------
-INSERT INTO `t_order` VALUES (34, '20240113221326347086', 360.00, 4, 3, '华子', '13867546787', '上海大学', '已完成', '2024-01-13 22:13:26', '2024-01-27 22:13:27');
+INSERT INTO `t_order` VALUES (34, '20240113221326347086', 360.00, 4, 3, '华子', '13867546787', '上海大学', '售后中', '2024-01-13 22:13:26', '2024-01-27 22:13:27');
 INSERT INTO `t_order` VALUES (36, '20240114002252674673', 200.00, 4, 5, '小李', '18675462567', '东华大学', '已完成', '2024-01-14 00:22:52', '2024-01-24 00:22:52');
 INSERT INTO `t_order` VALUES (37, 'testorder', 100.00, 4, 3, '华子', '13867546787', '上海大学', '已超时', '2023-12-31 16:56:03', '2024-01-14 18:26:00');
 INSERT INTO `t_order` VALUES (38, 'testtime2', 100.00, 4, 3, '华子', '13867546787', '上海大学', '已超时', '2024-01-14 17:50:07', '2024-01-14 18:27:11');
@@ -364,6 +373,7 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
+INSERT INTO `users` VALUES (1, 'admin', '/avatar/a.png', '123456', 'admin');
 INSERT INTO `users` VALUES (2, 'user', '/avatar/h09cd5add81ff4abfbd1ccf91b2e9c820.jpg', '123456', 'user');
 INSERT INTO `users` VALUES (3, 'water', '/avatar/09cd5add81ff4abfbd1ccf91b2e9c820.jpg', '123456', 'admin');
 INSERT INTO `users` VALUES (4, 'Alina', '/avatar/09cd5add81ff4abfbd1ccf91b2e9c820.jpg', '123456', 'user');

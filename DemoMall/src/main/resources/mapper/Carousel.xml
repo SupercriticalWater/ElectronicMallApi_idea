@@ -3,6 +3,6 @@
 <mapper namespace="org.springboot.demomall.mapper.CarouselMapper">
 
     <select id="getAllCarousel" resultType="org.springboot.demomall.entity.Carousel">
-        SELECT * FROM carousel ORDER BY show_order ASC LIMIT 6
+        SELECT * FROM carousel
     </select>
 </mapper>

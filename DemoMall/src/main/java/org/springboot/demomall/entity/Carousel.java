@@ -15,14 +15,14 @@ public class Carousel extends Model<Carousel> {
 
 
     /**
-     * 轮播顺序
-     */
-    private Long showOrder;
-
-    /**
      * 轮播图片url
      */
     private String fileUrl;
+
+    /**
+     * 轮播图文字信息
+     */
+    private String title;
 
 
     public Long getCarouselId() {
@@ -34,13 +34,6 @@ public class Carousel extends Model<Carousel> {
     }
 
 
-    public Long getShowOrder() {
-        return showOrder;
-    }
-
-    public void setShowOrder(Long showOrder) {
-        this.showOrder = showOrder;
-    }
 
     public String getFileUrl() {
         return fileUrl;
@@ -50,12 +43,20 @@ public class Carousel extends Model<Carousel> {
         this.fileUrl = fileUrl;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Override
     public String toString() {
         return "Carousel{" +
                 "carouselId=" + carouselId +
-                ", showOrder=" + showOrder +
-                ", fileImage='" + fileUrl + '\'' +
+                ", fileUrl='" + fileUrl + '\'' +
+                ", title='" + title + '\'' +
                 '}';
     }
 }

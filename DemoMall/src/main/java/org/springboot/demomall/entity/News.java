@@ -19,11 +19,6 @@ public class News extends Model<News> {
      */
     private String fileUrl;
 
-    /**
-     * 轮播顺序
-     */
-    private Long showOrder;
-
     public Long getNid() {
         return nid;
     }
@@ -40,20 +35,11 @@ public class News extends Model<News> {
         this.fileUrl = fileUrl;
     }
 
-    public Long getShowOrder() {
-        return showOrder;
-    }
-
-    public void setShowOrder(Long showOrder) {
-        this.showOrder = showOrder;
-    }
-
     @Override
     public String toString() {
         return "News{" +
                 "nid=" + nid +
                 ", fileUrl='" + fileUrl + '\'' +
-                ", showOrder=" + showOrder +
                 '}';
     }
 }

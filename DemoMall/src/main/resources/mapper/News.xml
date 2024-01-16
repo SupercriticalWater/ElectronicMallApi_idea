@@ -3,6 +3,6 @@
 <mapper namespace="org.springboot.demomall.mapper.NewsMapper">
 
     <select id="getAllNews" resultType="org.springboot.demomall.entity.News">
-        SELECT * FROM news ORDER BY show_order ASC LIMIT 5
+        SELECT * FROM news
     </select>
 </mapper>

@@ -33,6 +33,8 @@ import java.util.Map;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Component;
+import org.springboot.demomall.service.MessageService;
+import org.springboot.demomall.entity.Message;
 
 import static org.springboot.demomall.constants.RedisConstants.GOOD_TOKEN_KEY;
 
@@ -45,6 +47,9 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
     private OrderGoodsMapper orderGoodsMapper;
     @Resource
     private StandardService standardService;
+
+    @Resource
+    private MessageService messageService;
     @Resource
     private GoodMapper goodMapper;
     @Resource
@@ -166,6 +171,24 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
           for (String item: res){
               orderMapper.Belate(item);
               System.out.println(t);
+              Message message = new Message();
+              message.setTitle("订单超时通知");
+              message.setContent("很抱歉，您的订单 【" + item + "】已超时，您可联系商家进行协商与处理, 感谢您的理解！");
+              message.setSender(1);//默认管理员编号
+              Map<String,Object> map = orderMapper.selectByOrderNo(item);
+              Number u = (Number) map.get("uid");
+              message.setReceiver(u.intValue());
+              message.setCreateTime(DateUtil.now());
+              messageService.save(message);
+              //卖家通知
+              Message message1 = new Message();
+              message1.setTitle("订单超时通知");
+              message1.setContent("您的订单 【" + item + "】已超时，请您及时处理并联系买家！");
+              message1.setSender(1);//默认管理员编号
+              u = (Number) map.get("seller");
+              message1.setReceiver(u.intValue());
+              message1.setCreateTime(DateUtil.now());
+              messageService.save(message1);
               System.out.println("查询到超时订单，已自动更新订单状态 [" + item + "]");
           }
 

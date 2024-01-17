@@ -42,6 +42,14 @@ public class FavoriteController {
         return Result.success(fid,"删除成功");
     }
 
+    //通过uid和gid将某个商品从收藏夹移除
+    @DeleteMapping("deleteByUidAndGid/{uid}/{gid}")
+    public Result deleteByUidAndGid(@PathVariable Integer uid,@PathVariable Long gid){
+        Favorite favorite = favoriteService.findFavorite(uid,gid);
+        favoriteService.deleteByUidAndGid(uid,gid);
+        return Result.success(favorite,"删除成功");
+    }
+
     //清空收藏夹
     @DeleteMapping("/{uid}")
     public Result deleteAll(@PathVariable Long uid){

@@ -24,6 +24,13 @@ public class FavoriteService extends ServiceImpl<FavoriteMapper, Favorite> {
         remove(queryWrapper);
     }
 
+    public void deleteByUidAndGid(int uid,long gid){
+        QueryWrapper<Favorite> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("uid",uid);
+        queryWrapper.eq("gid",gid);
+        remove(queryWrapper);
+    }
+
     public void deleteAll(long uid){
         QueryWrapper<Favorite> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("uid",uid);
